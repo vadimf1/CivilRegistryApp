@@ -4,8 +4,6 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -20,14 +18,12 @@ import static com.codeborne.selenide.Selenide.open;
 public class Main {
     public static String applicationId;
 
-    @Test
-    @Order(1)
     public void test() {
-        open("https://regoffice.senla.eu/");
+        open("https://regoffice.senla.eu","","user","senlatest");
 
         $x("//button[text()='Войти как пользователь']").shouldBe(visible, Duration.ofSeconds(10)).click();
 
-        $x("//div[label[text() = 'Фамилия']]/following-sibling::input[1]").setValue("last-name");
+        $x("//div[label[text() = 'Фамилия']]/following-sibling::input").setValue("last-name");
         $x("//div[label[text() = 'Имя']]/following-sibling::input[1]").setValue("first-name");
         $x("//div[label[text() = 'Отчество']]/following-sibling::input[1]").setValue("middle-name");
         $x("//div[label[text() = 'Телефон']]/following-sibling::input[1]").setValue("298888230");
@@ -63,10 +59,8 @@ public class Main {
         applicationId = requestNumber;
     }
 
-    @Test
-    @Order(2)
     public void test2() {
-        open("https://regoffice.senla.eu/");
+        open("https://regoffice.senla.eu","","user","senlatest");
 
         $x("//button[text()='Войти как администратор']").shouldBe(visible, Duration.ofSeconds(10)).click();
 
