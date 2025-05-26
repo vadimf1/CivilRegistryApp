@@ -3,7 +3,7 @@ package org.example.ui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.example.ui.models.User;
+import org.example.models.User;
 
 import java.time.Duration;
 
@@ -15,8 +15,6 @@ public class MarriageRegistrationDataPage {
     private final SelenideElement INPUT_SPOUSE_MIDDLE_NAME = Selenide.$x("//div[label[text() = 'Отчество супруга/и']]/following-sibling::input");
     private final SelenideElement INPUT_SPOUSE_BIRTH_DATE = Selenide.$x("//div[label[text() = 'Дата рождения супруга/и']]/following-sibling::input");
     private final SelenideElement INPUT_SPOUSE_PASSPORT_NUMBER = Selenide.$x("//div[label[text() = 'Номер паспорта супруга/и']]/following-sibling::input");
-
-    private final PageAction action = new PageAction();
 
     private void isLoaded() {
         INPUT_REGISTRATION_DATE.shouldBe(Condition.visible, Duration.ofSeconds(10));
@@ -48,10 +46,6 @@ public class MarriageRegistrationDataPage {
 
     private void fillSpousePassportNumber(String spousePassportNumber) {
         INPUT_SPOUSE_PASSPORT_NUMBER.setValue(spousePassportNumber);
-    }
-
-    public void clickFinishButton() {
-        action.clickFinish();
     }
 
     public void fillMarriageRegistrationDataForm(User user) {

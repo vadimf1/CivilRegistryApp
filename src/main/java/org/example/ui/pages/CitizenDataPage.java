@@ -3,7 +3,7 @@ package org.example.ui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.example.ui.models.User;
+import org.example.models.User;
 
 import java.time.Duration;
 
@@ -15,8 +15,6 @@ public class CitizenDataPage {
     private final SelenideElement INPUT_PASSPORT_NUMBER = Selenide.$x("//div[label[text() = 'Номер паспорта']]/following-sibling::input");
     private final SelenideElement INPUT_GENDER = Selenide.$x("//div[label[text() = 'Пол']]/following-sibling::input");
     private final SelenideElement INPUT_ADDRESS = Selenide.$x("//div[label[text() = 'Адрес прописки']]/following-sibling::input");
-
-    private final PageAction action = new PageAction();
 
     private void isLoaded() {
         INPUT_LAST_NAME.shouldBe(Condition.visible, Duration.ofSeconds(10));
@@ -48,10 +46,6 @@ public class CitizenDataPage {
 
     private void fillAddress(String address) {
         INPUT_ADDRESS.setValue(address);
-    }
-
-    public void clickNextButton() {
-        action.clickNext();
     }
 
     public void fillCitizenDataForm(User user) {

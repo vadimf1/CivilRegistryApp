@@ -1,8 +1,8 @@
-package org.example.ui.utils;
+package org.example.utils;
 
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;
-import org.example.ui.models.User;
+import org.example.models.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.example.ui.models;
+package org.example.models;
 
 import lombok.Builder;
 import lombok.Getter;

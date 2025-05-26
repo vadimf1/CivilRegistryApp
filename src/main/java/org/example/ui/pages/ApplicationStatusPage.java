@@ -12,8 +12,6 @@ public class ApplicationStatusPage {
     private final SelenideElement applicationInfo = Selenide.$x("//span[contains(text(), 'Ваша заявка')]");
     private final SelenideElement applicationStatusInfo = Selenide.$x("//span[contains(., 'Статус заявки:')]");
 
-    private final PageAction action = new PageAction();
-
     public void checkIsLoaded() {
         applicationInfo.shouldBe(
                 Condition.matchText("Ваша заявка № \\d+ отправлена на рассмотрение\\."),
@@ -44,13 +42,5 @@ public class ApplicationStatusPage {
 
     public void checkApplicationIsRejected() {
         applicationStatusInfo.shouldHave(Condition.text("Отклонена"));
-    }
-
-    public void clickRefreshButton() {
-        action.clickRefresh();
-    }
-
-    public void clickCloseButton() {
-        action.clickClose();
     }
 }

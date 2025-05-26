@@ -3,7 +3,7 @@ package org.example.ui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.example.ui.models.User;
+import org.example.models.User;
 
 import java.time.Duration;
 
@@ -14,11 +14,7 @@ public class ApplicantDataPage {
     private final SelenideElement INPUT_PHONE_NUMBER = Selenide.$x("//div[label[text() = 'Телефон']]/following-sibling::input");
     private final SelenideElement INPUT_PASSPORT_NUMBER = Selenide.$x("//div[label[text() = 'Номер паспорта']]/following-sibling::input");
     private final SelenideElement INPUT_ADDRESS = Selenide.$x("//div[label[text() = 'Адрес прописки']]/following-sibling::input");
-    private final SelenideElement PAGE_TITLE = Selenide.$x(
-            "//h2[contains(@class, 'MuiTypography-root')]//span[normalize-space(string(.)) = 'Вы вошли как Пользоватиль']"
-    );
-
-    private final PageAction action = new PageAction();
+    private final SelenideElement PAGE_TITLE = Selenide.$x("//span[normalize-space(string(.)) = 'Вы вошли как Пользоватиль']");
 
     private void isLoaded() {
         PAGE_TITLE.shouldBe(Condition.visible, Duration.ofSeconds(10));
@@ -47,10 +43,6 @@ public class ApplicantDataPage {
 
     private void fillAddress(String address) {
         INPUT_ADDRESS.setValue(address);
-    }
-
-    public void clickNextButton() {
-        action.clickNext();
     }
 
     public void fillApplicantDataForm(User user) {

@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.ui.models.User;
+import org.example.models.User;
 import org.example.ui.pages.ApplicantDataPage;
 import org.example.ui.pages.ApplicationStatusPage;
 import org.example.ui.pages.BirthRegistrationDataPage;
@@ -8,7 +8,7 @@ import org.example.ui.pages.CitizenDataPage;
 import org.example.ui.pages.DeathRegistrationDataPage;
 import org.example.ui.pages.MarriageRegistrationDataPage;
 import org.example.ui.pages.ServiceSelectionPage;
-import org.example.ui.utils.UserFactory;
+import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,50 +28,50 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Death registration test")
+    @DisplayName("Регистрация смерти - E2E")
     void deathRegistrationTest() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseDeathRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         DeathRegistrationDataPage deathRegistrationDataPage = new DeathRegistrationDataPage();
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
-        deathRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
     }
 
     @Test
-    @DisplayName("Birth registration test")
+    @DisplayName("Регистрация рождения - E2E")
     void birthRegistrationTest() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseBirthRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         BirthRegistrationDataPage birthRegistrationDataPage = new BirthRegistrationDataPage();
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
-        birthRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
     }
 
     @Test
-    @DisplayName("Marriage registration test")
+    @DisplayName("Регистрация брака - E2E")
     void marriageRegistrationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseMarriageRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         MarriageRegistrationDataPage marriageRegistrationDataPage = new MarriageRegistrationDataPage();
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
-        marriageRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
     }
 }

@@ -1,7 +1,7 @@
 package org.example;
 
-import org.example.ui.models.Admin;
-import org.example.ui.models.User;
+import org.example.models.Admin;
+import org.example.models.User;
 import org.example.ui.pages.AdminRegistrationDataPage;
 import org.example.ui.pages.ApplicantDataPage;
 import org.example.ui.pages.ApplicationAdministrationPage;
@@ -11,8 +11,8 @@ import org.example.ui.pages.CitizenDataPage;
 import org.example.ui.pages.DeathRegistrationDataPage;
 import org.example.ui.pages.MarriageRegistrationDataPage;
 import org.example.ui.pages.ServiceSelectionPage;
-import org.example.ui.utils.AdminFactory;
-import org.example.ui.utils.UserFactory;
+import org.example.utils.AdminFactory;
+import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,182 +36,182 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Register and approve death application")
+    @DisplayName("Регистрация смерти с изменением статуса на 'Одобрено' - E2E")
     void deathApplicationApproveFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseDeathRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         DeathRegistrationDataPage deathRegistrationDataPage = new DeathRegistrationDataPage();
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
-        deathRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.approveApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsApproved(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
     }
 
     @Test
-    @DisplayName("Register and reject death application")
+    @DisplayName("Регистрация смерти с изменением статуса на 'Отклонено' - E2E")
     void deathApplicationRejectFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseDeathRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         DeathRegistrationDataPage deathRegistrationDataPage = new DeathRegistrationDataPage();
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
-        deathRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.rejectApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsRejected(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
     }
 
     @Test
-    @DisplayName("Register and approve birth application")
+    @DisplayName("Регистрация рождения с изменением статуса на 'Одобрено' - E2E")
     void birthApplicationApproveFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseBirthRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         BirthRegistrationDataPage birthRegistrationDataPage = new BirthRegistrationDataPage();
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
-        birthRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.approveApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsApproved(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
     }
 
     @Test
-    @DisplayName("Register and reject birth application")
+    @DisplayName("Регистрация рождения с изменением статуса на 'Отклонено' - E2E")
     void birthApplicationRejectFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseBirthRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         BirthRegistrationDataPage birthRegistrationDataPage = new BirthRegistrationDataPage();
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
-        birthRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.rejectApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsRejected(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
     }
 
     @Test
-    @DisplayName("Register and approve marriage application")
+    @DisplayName("Регистрация брака с изменением статуса на 'Одобрено' - E2E")
     void marriageApplicationApproveFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseMarriageRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         MarriageRegistrationDataPage marriageRegistrationDataPage = new MarriageRegistrationDataPage();
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
-        marriageRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.approveApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsApproved(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
     }
 
     @Test
-    @DisplayName("Register and reject marriage application")
+    @DisplayName("Регистрация брака с изменением статуса на 'Отклонено' - E2E")
     void marriageApplicationRejectFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
         applicantDataPage.fillApplicantDataForm(user);
-        applicantDataPage.clickNextButton();
+        action.clickNext();
         serviceSelectionPage.chooseMarriageRegistration();
         citizenDataPage.fillCitizenDataForm(user);
-        citizenDataPage.clickNextButton();
+        action.clickNext();
         MarriageRegistrationDataPage marriageRegistrationDataPage = new MarriageRegistrationDataPage();
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
-        marriageRegistrationDataPage.clickFinishButton();
+        action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationStatusPage.clickCloseButton();
+        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
-        adminRegistrationDataPage.clickNextButton();
+        action.clickNext();
         applicationAdministrationPage.rejectApplicationByNumber(applicationNumber);
         applicationAdministrationPage.checkApplicationIsRejected(applicationNumber);
-        applicationAdministrationPage.clickCloseButton();
+        action.clickClose();
 
         mainPage.enterAsUser();
-        applicationStatusPage.clickRefreshButton();
+        action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
     }
 }

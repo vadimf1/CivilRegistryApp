@@ -12,8 +12,6 @@ public class ApplicationAdministrationPage {
     public final ElementsCollection APPLICATION_ROWS = Selenide.$$x("//table//tr[position() > 1]");
     private final SelenideElement INFO_TABLE = Selenide.$x("//table[contains(@class, 'MuiTable-root')]");
 
-    private final PageAction action = new PageAction();
-
     public void checkIsLoaded() {
         INFO_TABLE.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
@@ -57,10 +55,6 @@ public class ApplicationAdministrationPage {
         getRowByApplicationNumber(number)
                 .$x("./td[last()-1]")
                 .shouldHave(Condition.text("Отклонена"), Duration.ofSeconds(10));
-    }
-
-    public void clickCloseButton() {
-        action.clickClose();
     }
 
     private SelenideElement getRowByApplicationNumber(String number) {
