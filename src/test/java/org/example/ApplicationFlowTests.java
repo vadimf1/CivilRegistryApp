@@ -1,22 +1,17 @@
 package org.example;
 
+import io.qameta.allure.*;
 import org.example.models.Admin;
 import org.example.models.User;
-import org.example.ui.pages.AdminRegistrationDataPage;
-import org.example.ui.pages.ApplicantDataPage;
-import org.example.ui.pages.ApplicationAdministrationPage;
-import org.example.ui.pages.ApplicationStatusPage;
-import org.example.ui.pages.BirthRegistrationDataPage;
-import org.example.ui.pages.CitizenDataPage;
-import org.example.ui.pages.DeathRegistrationDataPage;
-import org.example.ui.pages.MarriageRegistrationDataPage;
-import org.example.ui.pages.ServiceSelectionPage;
+import org.example.ui.pages.*;
 import org.example.utils.AdminFactory;
 import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Epic("E2E тесты регистрации и администрирования")
+@Feature("Подача заявок и управление их статусами")
 public class ApplicationFlowTests extends BaseUiTest {
     ApplicantDataPage applicantDataPage;
     ServiceSelectionPage serviceSelectionPage;
@@ -36,7 +31,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация смерти и одобрение заявки")
     @DisplayName("Регистрация смерти с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void deathApplicationApproveFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
@@ -66,7 +63,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация смерти и отклонение заявки")
     @DisplayName("Регистрация смерти с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void deathApplicationRejectFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
@@ -96,7 +95,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация рождения и одобрение заявки")
     @DisplayName("Регистрация рождения с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void birthApplicationApproveFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
@@ -126,7 +127,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация рождения и отклонение заявки")
     @DisplayName("Регистрация рождения с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void birthApplicationRejectFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
@@ -156,7 +159,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация брака и одобрение заявки")
     @DisplayName("Регистрация брака с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationApproveFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
@@ -186,7 +191,9 @@ public class ApplicationFlowTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация брака и отклонение заявки")
     @DisplayName("Регистрация брака с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationRejectFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();

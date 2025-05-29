@@ -3,6 +3,7 @@ package org.example.ui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.example.models.User;
 
 import java.time.Duration;
@@ -16,35 +17,43 @@ public class ApplicantDataPage {
     private final SelenideElement INPUT_ADDRESS = Selenide.$x("//div[label[text() = 'Адрес прописки']]/following-sibling::input");
     private final SelenideElement PAGE_TITLE = Selenide.$x("//span[normalize-space(string(.)) = 'Вы вошли как Пользоватиль']");
 
+    @Step("Проверка загрузки страницы ввода данных заявителя")
     private void isLoaded() {
         PAGE_TITLE.shouldBe(Condition.visible, Duration.ofSeconds(10));
         INPUT_LAST_NAME.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
+    @Step("Ввод фамилии: {lastName}")
     private void fillLastName(String lastName) {
         INPUT_LAST_NAME.setValue(lastName);
     }
 
+    @Step("Ввод имени: {firstName}")
     private void fillFirstName(String firstName) {
         INPUT_FIRST_NAME.setValue(firstName);
     }
 
+    @Step("Ввод отчества: {middleName}")
     private void fillMiddleName(String middleName) {
         INPUT_MIDDLE_NAME.setValue(middleName);
     }
 
+    @Step("Ввод телефона: {phoneNumber}")
     private void fillPhoneNumber(String phoneNumber) {
         INPUT_PHONE_NUMBER.setValue(phoneNumber);
     }
 
+    @Step("Ввод номера паспорта: {passportNumber}")
     private void fillPassportNumber(String passportNumber) {
         INPUT_PASSPORT_NUMBER.setValue(passportNumber);
     }
 
+    @Step("Ввод адреса: {address}")
     private void fillAddress(String address) {
         INPUT_ADDRESS.setValue(address);
     }
 
+    @Step("Заполнение формы заявителя")
     public void fillApplicantDataForm(User user) {
         isLoaded();
         fillLastName(user.getApplicantLastName());

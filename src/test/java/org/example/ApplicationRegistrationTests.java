@@ -1,5 +1,6 @@
 package org.example;
 
+import io.qameta.allure.*;
 import org.example.models.User;
 import org.example.ui.pages.ApplicantDataPage;
 import org.example.ui.pages.ApplicationStatusPage;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Epic("E2E тесты регистрации")
+@Feature("Подача заявки пользователем")
 public class ApplicationRegistrationTests extends BaseUiTest {
     ApplicantDataPage applicantDataPage;
     ServiceSelectionPage serviceSelectionPage;
@@ -28,7 +31,9 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация смерти")
     @DisplayName("Регистрация смерти - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void deathRegistrationTest() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
@@ -44,7 +49,9 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация рождения")
     @DisplayName("Регистрация рождения - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void birthRegistrationTest() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
@@ -60,7 +67,9 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     }
 
     @Test
+    @Story("Регистрация брака")
     @DisplayName("Регистрация брака - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void marriageRegistrationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();

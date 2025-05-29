@@ -1,5 +1,6 @@
 package org.example;
 
+import io.qameta.allure.*;
 import org.example.models.Admin;
 import org.example.ui.pages.AdminRegistrationDataPage;
 import org.example.ui.pages.ApplicationAdministrationPage;
@@ -8,7 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Epic("Администрирование")
+@Feature("Работа с заявками")
+@Severity(SeverityLevel.CRITICAL)
 public class ApplicationAdministrationTests extends BaseUiTest {
+
     AdminRegistrationDataPage adminRegistrationDataPage;
     ApplicationAdministrationPage applicationAdministrationPage;
 
@@ -19,7 +24,8 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Администрирование заявок, изменение статуса заявки на 'Одобрена' - E2E")
+    @Story("Изменение статуса заявки на 'Одобрена'")
+    @DisplayName("Администрирование заявок: статус 'Одобрена' - E2E")
     void approveApplicationTest() {
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -31,7 +37,8 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Администрирование заявок, изменение статуса заявки на 'Отклонена' - E2E")
+    @Story("Изменение статуса заявки на 'Отклонена'")
+    @DisplayName("Администрирование заявок: статус 'Отклонена' - E2E")
     void rejectApplicationTest() {
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
