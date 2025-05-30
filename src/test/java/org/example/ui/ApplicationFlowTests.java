@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ui;
 
 import io.qameta.allure.*;
 import org.example.models.Admin;

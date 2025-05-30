@@ -1,36 +1,18 @@
 package org.example.ui.pages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
-import java.util.Random;
 
 public class ApplicationAdministrationPage {
-    public final ElementsCollection APPLICATION_ROWS = Selenide.$$x("//table//tr[position() > 1]");
     private final SelenideElement INFO_TABLE = Selenide.$x("//table[contains(@class, 'MuiTable-root')]");
 
     @Step("Проверка загрузки таблицы заявок")
     public void checkIsLoaded() {
         INFO_TABLE.shouldBe(Condition.visible, Duration.ofSeconds(10));
-    }
-
-    @Step("Выбор случайной заявки из таблицы")
-    public String getRandomApplicationNumber() {
-        checkIsLoaded();
-
-        if (APPLICATION_ROWS.isEmpty()) {
-            throw new IllegalStateException("Нет доступных заявок в таблице.");
-        }
-
-        int randomIndex = new Random().nextInt(APPLICATION_ROWS.size());
-        SelenideElement randomRow = APPLICATION_ROWS.get(randomIndex);
-
-        String number = randomRow.$x("./td[1]").getText().trim();
-        return number;
     }
 
     @Step("Одобрение заявки с номером: {number}")
