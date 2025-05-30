@@ -30,8 +30,8 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         applicationStatusPage = new ApplicationStatusPage();
     }
 
+    @TmsLink("155")
     @Test
-    @Story("Регистрация смерти")
     @DisplayName("Регистрация смерти - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void deathRegistrationTest() {
@@ -48,8 +48,8 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         applicationStatusPage.checkIsLoaded();
     }
 
+    @TmsLink("156")
     @Test
-    @Story("Регистрация рождения")
     @DisplayName("Регистрация рождения - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void birthRegistrationTest() {
@@ -66,8 +66,8 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         applicationStatusPage.checkIsLoaded();
     }
 
+    @TmsLink("154")
     @Test
-    @Story("Регистрация брака")
     @DisplayName("Регистрация брака - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void marriageRegistrationTest() {

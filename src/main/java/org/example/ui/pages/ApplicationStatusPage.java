@@ -19,7 +19,6 @@ public class ApplicationStatusPage {
                 Condition.matchText("Ваша заявка № \\d+ отправлена на рассмотрение\\."),
                 Duration.ofSeconds(10)
         );
-        System.out.println(applicationInfo.getText()); // можно убрать, если не нужен вывод
     }
 
     @Step("Получение номера заявки")

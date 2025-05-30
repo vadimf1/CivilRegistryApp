@@ -23,8 +23,8 @@ public class ApplicationAdministrationTests extends BaseUiTest {
         applicationAdministrationPage = new ApplicationAdministrationPage();
     }
 
+    @TmsLink("157")
     @Test
-    @Story("Изменение статуса заявки на 'Одобрена'")
     @DisplayName("Администрирование заявок: статус 'Одобрена' - E2E")
     void approveApplicationTest() {
         Admin admin = AdminFactory.createAdmin();
@@ -36,8 +36,8 @@ public class ApplicationAdministrationTests extends BaseUiTest {
         applicationAdministrationPage.checkApplicationIsApproved(applicationNumber);
     }
 
+    @TmsLink("157")
     @Test
-    @Story("Изменение статуса заявки на 'Отклонена'")
     @DisplayName("Администрирование заявок: статус 'Отклонена' - E2E")
     void rejectApplicationTest() {
         Admin admin = AdminFactory.createAdmin();

@@ -30,8 +30,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationAdministrationPage = new ApplicationAdministrationPage();
     }
 
+    @TmsLink("367")
     @Test
-    @Story("Регистрация смерти и одобрение заявки")
     @DisplayName("Регистрация смерти с изменением статуса на 'Одобрено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void deathApplicationApproveFlow() {
@@ -62,8 +62,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("368")
     @Test
-    @Story("Регистрация смерти и отклонение заявки")
     @DisplayName("Регистрация смерти с изменением статуса на 'Отклонено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void deathApplicationRejectFlow() {
@@ -94,8 +94,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsRejected();
     }
 
+    @TmsLink("361")
     @Test
-    @Story("Регистрация рождения и одобрение заявки")
     @DisplayName("Регистрация рождения с изменением статуса на 'Одобрено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void birthApplicationApproveFlow() {
@@ -126,8 +126,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("362")
     @Test
-    @Story("Регистрация рождения и отклонение заявки")
     @DisplayName("Регистрация рождения с изменением статуса на 'Отклонено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void birthApplicationRejectFlow() {
@@ -158,8 +158,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsRejected();
     }
 
+    @TmsLink("365")
     @Test
-    @Story("Регистрация брака и одобрение заявки")
     @DisplayName("Регистрация брака с изменением статуса на 'Одобрено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationApproveFlow() {
@@ -190,8 +190,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("366")
     @Test
-    @Story("Регистрация брака и отклонение заявки")
     @DisplayName("Регистрация брака с изменением статуса на 'Отклонено' - E2E")
     @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationRejectFlow() {
