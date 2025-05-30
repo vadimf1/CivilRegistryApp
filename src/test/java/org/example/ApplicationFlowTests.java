@@ -1,22 +1,17 @@
 package org.example;
 
+import io.qameta.allure.*;
 import org.example.models.Admin;
 import org.example.models.User;
-import org.example.ui.pages.AdminRegistrationDataPage;
-import org.example.ui.pages.ApplicantDataPage;
-import org.example.ui.pages.ApplicationAdministrationPage;
-import org.example.ui.pages.ApplicationStatusPage;
-import org.example.ui.pages.BirthRegistrationDataPage;
-import org.example.ui.pages.CitizenDataPage;
-import org.example.ui.pages.DeathRegistrationDataPage;
-import org.example.ui.pages.MarriageRegistrationDataPage;
-import org.example.ui.pages.ServiceSelectionPage;
+import org.example.ui.pages.*;
 import org.example.utils.AdminFactory;
 import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Epic("E2E тесты регистрации и администрирования")
+@Feature("Подача заявок и управление их статусами")
 public class ApplicationFlowTests extends BaseUiTest {
     ApplicantDataPage applicantDataPage;
     ServiceSelectionPage serviceSelectionPage;
@@ -35,8 +30,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationAdministrationPage = new ApplicationAdministrationPage();
     }
 
+    @TmsLink("367")
     @Test
     @DisplayName("Регистрация смерти с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void deathApplicationApproveFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
@@ -65,8 +62,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("368")
     @Test
     @DisplayName("Регистрация смерти с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void deathApplicationRejectFlow() {
         User user = UserFactory.createUserForDeathRegistration();
         mainPage.enterAsUser();
@@ -95,8 +94,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsRejected();
     }
 
+    @TmsLink("361")
     @Test
     @DisplayName("Регистрация рождения с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void birthApplicationApproveFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
@@ -125,8 +126,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("362")
     @Test
     @DisplayName("Регистрация рождения с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void birthApplicationRejectFlow() {
         User user = UserFactory.createUserForBirthRegistration();
         mainPage.enterAsUser();
@@ -155,8 +158,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsRejected();
     }
 
+    @TmsLink("365")
     @Test
     @DisplayName("Регистрация брака с изменением статуса на 'Одобрено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationApproveFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
@@ -185,8 +190,10 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage.checkApplicationIsApproved();
     }
 
+    @TmsLink("366")
     @Test
     @DisplayName("Регистрация брака с изменением статуса на 'Отклонено' - E2E")
+    @Severity(SeverityLevel.CRITICAL)
     void marriageApplicationRejectFlow() {
         User user = UserFactory.createUserForMarriageRegistration();
         mainPage.enterAsUser();
