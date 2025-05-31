@@ -3,7 +3,7 @@ package org.example.ui;
 import io.qameta.allure.*;
 import org.example.api.ApplicationRegistrationApiClient;
 import org.example.models.Admin;
-import org.example.models.ApplicationResponse;
+import org.example.models.CreateApplicationResponse;
 import org.example.ui.pages.AdminRegistrationDataPage;
 import org.example.ui.pages.ApplicationAdministrationPage;
 import org.example.utils.AdminFactory;
@@ -32,7 +32,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     @Test
     @DisplayName("Администрирование заявок: статус 'Одобрена' - E2E")
     void approveApplicationTest() {
-        ApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
+        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
@@ -45,7 +45,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     @Test
     @DisplayName("Администрирование заявок: статус 'Отклонена' - E2E")
     void rejectApplicationTest() {
-        ApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
+        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
