@@ -2,14 +2,14 @@ package org.example.api.client;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import io.restassured.module.jsv.JsonSchemaValidator;
+import org.example.api.spec.RequestSpecs;
 import org.example.models.Admin;
 import org.example.models.ChangeApplicationStatusRequest;
 import org.example.models.ChangeApplicationStatusResponse;
 import org.example.models.CreateAdminResponse;
 import org.example.models.GetAllApplicationsResponse;
 import org.example.utils.PropertyUtil;
-
-import static org.example.api.spec.RequestSpecs.authenticatedJsonSpec;
 
 public class ApplicationAdministrationApiClient {
     private final String REGISTER_ADMIN_ENDPOINT_KEY = "endpoint.sendAdminRequest";
@@ -20,12 +20,13 @@ public class ApplicationAdministrationApiClient {
     public CreateAdminResponse registerAdmin(Admin admin) {
         return RestAssured
                 .given()
-                .spec(authenticatedJsonSpec())
+                .spec(RequestSpecs.authenticatedJsonSpec())
                 .body(admin)
                 .when()
                 .post(PropertyUtil.getProperty(REGISTER_ADMIN_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/register-admin-response-schema.json"))
                 .extract()
                 .as(CreateAdminResponse.class);
     }
@@ -33,11 +34,12 @@ public class ApplicationAdministrationApiClient {
     @Step("Получение всех заявок через API")
     public GetAllApplicationsResponse getAllApplications() {
         return RestAssured.given()
-                .spec(authenticatedJsonSpec())
+                .spec(RequestSpecs.authenticatedJsonSpec())
                 .when()
                 .get(PropertyUtil.getProperty(GET_APPLICATIONS_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/get-all-applications-response-schema.json"))
                 .extract()
                 .as(GetAllApplicationsResponse.class);
     }
@@ -46,12 +48,13 @@ public class ApplicationAdministrationApiClient {
     public ChangeApplicationStatusResponse changeApplicationStatus(ChangeApplicationStatusRequest request) {
         return RestAssured
                 .given()
-                .spec(authenticatedJsonSpec())
+                .spec(RequestSpecs.authenticatedJsonSpec())
                 .body(request)
                 .when()
                 .post(PropertyUtil.getProperty(CHANGE_APPLICATION_STATUS_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/change-application-status-response-schema.json"))
                 .extract()
                 .as(ChangeApplicationStatusResponse.class);
     }

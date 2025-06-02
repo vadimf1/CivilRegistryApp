@@ -11,8 +11,8 @@ import org.example.utils.PropertyUtil;
 public class RequestSpecs {
 
     private static final String BASE_URI_KEY = "baseUri";
-    private static final String LOGIN_KEY = "login";
-    private static final String PASSWORD_KEY = "password";
+    private static final String LOGIN_KEY = "app.login";
+    private static final String PASSWORD_KEY = "app.password";
 
     public static RequestSpecification authenticatedJsonSpec() {
         return new RequestSpecBuilder()

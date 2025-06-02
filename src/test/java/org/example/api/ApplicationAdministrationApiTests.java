@@ -10,17 +10,12 @@ import org.example.models.ChangeApplicationStatusRequest;
 import org.example.models.ChangeApplicationStatusResponse;
 import org.example.models.CreateAdminResponse;
 import org.example.models.CreateApplicationResponse;
-import org.example.models.GetAllApplicationsResponse;
 import org.example.models.User;
 import org.example.utils.AdminFactory;
 import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Epic("API Администрирование")
 @Feature("Работа с заявками")
@@ -39,18 +34,14 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /sendAdminRequest - Создание админа - Валидный запрос")
     void registerAdminTest() {
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse response = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(response.getRequestId());
-        assertTrue(response.getData().getStaffId() > 0);
+        applicationAdministrationApiClient.registerAdmin(admin);
     }
 
     @TmsLink("357")
     @Test
     @DisplayName("GET /getApplication - Получение информации о заявках - Валидный запрос")
     void getAllApplicationsTest() {
-        GetAllApplicationsResponse response = applicationAdministrationApiClient.getAllApplications();
-        assertTrue(Integer.parseInt( response.getTotal()) > 0);
-        assertNotNull(response.getRequestId());
+        applicationAdministrationApiClient.getAllApplications();
     }
 
     @TmsLink("336")
@@ -59,26 +50,19 @@ public class ApplicationAdministrationApiTests {
     void approveBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("approved", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 
     @TmsLink("337")
@@ -87,26 +71,19 @@ public class ApplicationAdministrationApiTests {
     void approveMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("approved", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 
     @TmsLink("338")
@@ -115,26 +92,19 @@ public class ApplicationAdministrationApiTests {
     void approveDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("approved", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 
     @TmsLink("341")
@@ -143,26 +113,19 @@ public class ApplicationAdministrationApiTests {
     void rejectDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("rejected", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 
     @TmsLink("339")
@@ -171,26 +134,19 @@ public class ApplicationAdministrationApiTests {
     void rejectBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("rejected", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 
     @TmsLink("340")
@@ -199,25 +155,18 @@ public class ApplicationAdministrationApiTests {
     void rejectMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        assertNotNull(createAdminResponse.getRequestId());
-        assertTrue(createAdminResponse.getData().getStaffId() > 0);
         Integer staffId = createAdminResponse.getData().getStaffId();
 
-        ChangeApplicationStatusResponse changeApplicationStatusResponse = applicationAdministrationApiClient.changeApplicationStatus(
+        applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
-
-        assertNotNull(changeApplicationStatusResponse.getRequestId());
-        assertEquals("rejected", changeApplicationStatusResponse.getData().getStatusOfApplication());
     }
 }

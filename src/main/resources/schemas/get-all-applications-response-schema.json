@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["total", "data", "requestId"],
+  "properties": {
+    "total": {
+      "type": "string"
+    },
+    "requestId": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "applicationid",
+          "citizenid",
+          "applicantid",
+          "dateofapplication",
+          "kindofapplication",
+          "statusofapplication",
+          "staffid",
+          "channel",
+          "image"
+        ],
+        "properties": {
+          "applicationid": { "type": "integer" },
+          "citizenid": { "type": "integer" },
+          "applicantid": { "type": "integer" },
+          "staffid": { "type": ["integer", "null"] },
+          "dateofapplication": { "type": "string" },
+          "kindofapplication": { "type": "string" },
+          "statusofapplication": { "type": "string" },
+          "channel": { "type": ["string", "null"] },
+          "image": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

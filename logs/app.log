@@ -1,0 +1,40 @@
+2025-06-02 18:21:30 [Test worker] INFO  org.example.ui.pages.MainPage - Открытие главной страницы
+2025-06-02 18:21:30 [Test worker] INFO  c.c.s.WebDriverThreadLocalContainer - No webdriver is bound to current thread: 1 - let's create a new webdriver
+2025-06-02 18:21:33 [Test worker] INFO  c.c.s.webdriver.WebDriverFactory - Selenide 7.7.3 / Selenium 4.29.0 / chrome 133.0.6943.99 mac
+2025-06-02 18:21:41 [Test worker] INFO  org.example.ui.pages.MainPage - Вход как администратор
+2025-06-02 18:21:41 [Test worker] INFO  org.example.ui.pages.MainPage - Проверка, что главная страница загружена
+2025-06-02 18:21:41 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Заполнение формы администратора: org.example.models.Admin@4fa78886
+2025-06-02 18:21:41 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Проверка загрузки страница администратора
+2025-06-02 18:21:41 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим фамилию: Ефремов
+2025-06-02 18:21:41 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим имя: Тамара
+2025-06-02 18:21:41 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим отчество: Данииловна
+2025-06-02 18:21:42 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим номер телефона: 60238563721
+2025-06-02 18:21:42 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим номер паспорта: 83113678
+2025-06-02 18:21:42 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим дату рождения: 1979-01-30
+2025-06-02 18:21:42 [Test worker] INFO  org.example.ui.pages.PageAction - Нажатие кнопки 'Далее'
+2025-06-02 18:21:42 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Отклонение заявки с номером: 49733
+2025-06-02 18:21:42 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка загрузки таблицы заявок
+2025-06-02 18:21:43 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Поиск строки по номеру заявки: 49733
+2025-06-02 18:21:43 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка, что заявка с номером 49733 отклонена
+2025-06-02 18:21:43 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка загрузки таблицы заявок
+2025-06-02 18:21:43 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Поиск строки по номеру заявки: 49733
+2025-06-02 18:21:43 [Test worker] INFO  org.example.ui.pages.MainPage - Открытие главной страницы
+2025-06-02 18:21:43 [Test worker] INFO  c.c.s.WebDriverThreadLocalContainer - No webdriver is bound to current thread: 1 - let's create a new webdriver
+2025-06-02 18:21:44 [Test worker] INFO  c.c.s.webdriver.WebDriverFactory - Selenide 7.7.3 / Selenium 4.29.0 / chrome 133.0.6943.99 mac
+2025-06-02 18:21:50 [Test worker] INFO  org.example.ui.pages.MainPage - Вход как администратор
+2025-06-02 18:21:50 [Test worker] INFO  org.example.ui.pages.MainPage - Проверка, что главная страница загружена
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Заполнение формы администратора: org.example.models.Admin@4fdc1a37
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Проверка загрузки страница администратора
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим фамилию: Ситников
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим имя: Алексей
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим отчество: Вячеславовна
+2025-06-02 18:21:50 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим номер телефона: 23483224468
+2025-06-02 18:21:51 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим номер паспорта: 01325778
+2025-06-02 18:21:51 [Test worker] INFO  o.e.u.p.AdminRegistrationDataPage - Вводим дату рождения: 1997-09-03
+2025-06-02 18:21:51 [Test worker] INFO  org.example.ui.pages.PageAction - Нажатие кнопки 'Далее'
+2025-06-02 18:21:51 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Одобрение заявки с номером: 49734
+2025-06-02 18:21:51 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка загрузки таблицы заявок
+2025-06-02 18:21:51 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Поиск строки по номеру заявки: 49734
+2025-06-02 18:21:52 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка, что заявка с номером 49734 одобрена
+2025-06-02 18:21:52 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Проверка загрузки таблицы заявок
+2025-06-02 18:21:52 [Test worker] INFO  o.e.u.p.ApplicationAdministrationPage - Поиск строки по номеру заявки: 49734

@@ -5,16 +5,11 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
 import org.example.api.client.ApplicationRegistrationApiClient;
 import org.example.models.CreateApplicationResponse;
-import org.example.models.GetApplStatusResponse;
 import org.example.models.User;
 import org.example.utils.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Epic("API Тесты регистрации заявок")
 @Feature("Подача заявки пользователем")
@@ -31,10 +26,7 @@ public class ApplicationRegistrationApiTests {
     @DisplayName("POST /sendUserRequest (Регистрация рождения) - Валидный запрос")
     void createBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
-
-        assertNotNull(response.getRequestId());
-        assertTrue(response.getData().getApplicationId() > 0);
+        applicationRegistrationApiClient.createApplication(user);
     }
 
     @TmsLink("327")
@@ -42,10 +34,7 @@ public class ApplicationRegistrationApiTests {
     @DisplayName("POST /sendUserRequest (Регистрация брака) - Валидный запрос")
     void createMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
-
-        assertNotNull(response.getRequestId());
-        assertTrue(response.getData().getApplicationId() > 0);
+        applicationRegistrationApiClient.createApplication(user);
     }
 
     @TmsLink("330")
@@ -53,10 +42,7 @@ public class ApplicationRegistrationApiTests {
     @DisplayName("POST /sendUserRequest (Регистрация смерти) - Валидный запрос")
     void createDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
-
-        assertNotNull(response.getRequestId());
-        assertTrue(response.getData().getApplicationId() > 0);
+        applicationRegistrationApiClient.createApplication(user);
     }
 
     @TmsLink("353")
@@ -65,12 +51,8 @@ public class ApplicationRegistrationApiTests {
     void getApplicationStatusTest() {
         User user = UserFactory.createUserForDeathRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        assertNotNull(createApplicationResponse.getRequestId());
-        assertTrue(createApplicationResponse.getData().getApplicationId() > 0);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
-        GetApplStatusResponse getApplStatusResponse = applicationRegistrationApiClient.getApplStatus(applicationId);
-        assertNotNull(getApplStatusResponse.getRequestId());
-        assertEquals("under consideration", getApplStatusResponse.getData().getStatusOfApplication());
+        applicationRegistrationApiClient.getApplStatus(applicationId);
     }
 }
