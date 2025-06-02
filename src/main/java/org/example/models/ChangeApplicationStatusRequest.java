@@ -9,13 +9,10 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ChangeApplicationStatusRequest {
-
     @JsonProperty("action")
     private String action;
-
     @JsonProperty("applId")
     private Integer appId;
-
     @JsonProperty("staffid")
     private Integer staffId;
 }

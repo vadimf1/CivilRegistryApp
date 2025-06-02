@@ -1,4 +1,4 @@
-package org.example.api;
+package org.example.api.client;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -7,13 +7,14 @@ import org.example.models.ChangeApplicationStatusRequest;
 import org.example.models.ChangeApplicationStatusResponse;
 import org.example.models.CreateAdminResponse;
 import org.example.models.GetAllApplicationsResponse;
+import org.example.utils.PropertyUtil;
 
-import static org.example.api.RequestSpecs.authenticatedJsonSpec;
+import static org.example.api.spec.RequestSpecs.authenticatedJsonSpec;
 
 public class ApplicationAdministrationApiClient {
-    private final String REGISTER_ADMIN_URL = "https://regoffice.senla.eu/sendAdminRequest";
-    private final String GET_APPLICATIONS_URL = "https://regoffice.senla.eu/getApplications";
-    private final String CHANGE_APPLICATION_STATUS_URL = "https://regoffice.senla.eu/requestProcess\n";
+    private final String REGISTER_ADMIN_ENDPOINT_KEY = "endpoint.sendAdminRequest";
+    private final String GET_APPLICATIONS_ENDPOINT_KEY = "endpoint.getApplications";
+    private final String CHANGE_APPLICATION_STATUS_ENDPOINT_KEY = "endpoint.changeApplicationStatus";
 
     @Step("Регистрация админа через API")
     public CreateAdminResponse registerAdmin(Admin admin) {
@@ -22,7 +23,7 @@ public class ApplicationAdministrationApiClient {
                 .spec(authenticatedJsonSpec())
                 .body(admin)
                 .when()
-                .post(REGISTER_ADMIN_URL)
+                .post(PropertyUtil.getProperty(REGISTER_ADMIN_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
                 .extract()
@@ -34,7 +35,7 @@ public class ApplicationAdministrationApiClient {
         return RestAssured.given()
                 .spec(authenticatedJsonSpec())
                 .when()
-                .get(GET_APPLICATIONS_URL)
+                .get(PropertyUtil.getProperty(GET_APPLICATIONS_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
                 .extract()
@@ -48,7 +49,7 @@ public class ApplicationAdministrationApiClient {
                 .spec(authenticatedJsonSpec())
                 .body(request)
                 .when()
-                .post(CHANGE_APPLICATION_STATUS_URL)
+                .post(PropertyUtil.getProperty(CHANGE_APPLICATION_STATUS_ENDPOINT_KEY))
                 .then()
                 .statusCode(200)
                 .extract()

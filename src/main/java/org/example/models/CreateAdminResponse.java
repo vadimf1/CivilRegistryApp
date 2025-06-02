@@ -9,14 +9,12 @@ import lombok.Setter;
 public class CreateAdminResponse {
     @JsonProperty("data")
     private Data data;
-
     @JsonProperty("requestId")
     private String requestId;
 
     @Getter
     @Setter
     public static class Data {
-
         @JsonProperty("staffid")
         private Integer staffId;
     }

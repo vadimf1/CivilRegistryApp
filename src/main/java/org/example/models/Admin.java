@@ -9,22 +9,16 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Admin {
-
     @JsonProperty("personalLastName")
     private String lastName;
-
     @JsonProperty("personalFirstName")
     private String firstName;
-
     @JsonProperty("personalMiddleName")
     private String middleName;
-
     @JsonProperty("personalPhoneNumber")
     private String phoneNumber;
-
     @JsonProperty("personalNumberOfPassport")
     private String passportNumber;
-
     @JsonProperty("dateofbirth")
     private String birthDate;
 }

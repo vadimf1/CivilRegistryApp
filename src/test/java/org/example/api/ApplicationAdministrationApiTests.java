@@ -3,6 +3,8 @@ package org.example.api;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
+import org.example.api.client.ApplicationAdministrationApiClient;
+import org.example.api.client.ApplicationRegistrationApiClient;
 import org.example.models.Admin;
 import org.example.models.ChangeApplicationStatusRequest;
 import org.example.models.ChangeApplicationStatusResponse;

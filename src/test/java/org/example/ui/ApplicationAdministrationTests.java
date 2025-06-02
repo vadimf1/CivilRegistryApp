@@ -1,7 +1,7 @@
 package org.example.ui;
 
 import io.qameta.allure.*;
-import org.example.api.ApplicationRegistrationApiClient;
+import org.example.api.client.ApplicationRegistrationApiClient;
 import org.example.models.Admin;
 import org.example.models.CreateApplicationResponse;
 import org.example.ui.pages.AdminRegistrationDataPage;
