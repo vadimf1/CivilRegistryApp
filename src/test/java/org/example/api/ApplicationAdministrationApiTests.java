@@ -5,14 +5,15 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
 import org.example.api.client.ApplicationAdministrationApiClient;
 import org.example.api.client.ApplicationRegistrationApiClient;
+import org.example.db.AdminManager;
+import org.example.db.ApplicationManager;
 import org.example.models.Admin;
 import org.example.models.ChangeApplicationStatusRequest;
-import org.example.models.ChangeApplicationStatusResponse;
 import org.example.models.CreateAdminResponse;
-import org.example.models.CreateApplicationResponse;
 import org.example.models.User;
 import org.example.utils.AdminFactory;
 import org.example.utils.UserFactory;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,11 +23,15 @@ import org.junit.jupiter.api.Test;
 public class ApplicationAdministrationApiTests {
     ApplicationAdministrationApiClient applicationAdministrationApiClient;
     ApplicationRegistrationApiClient applicationRegistrationApiClient;
+    ApplicationManager applicationManager;
+    AdminManager adminManager;
 
     @BeforeEach
     void setUp() {
         applicationAdministrationApiClient = new ApplicationAdministrationApiClient();
         applicationRegistrationApiClient = new ApplicationRegistrationApiClient();
+        applicationManager = new ApplicationManager();
+        adminManager = new AdminManager();
     }
 
     @TmsLink("334")
@@ -34,7 +39,8 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /sendAdminRequest - Создание админа - Валидный запрос")
     void registerAdminTest() {
         Admin admin = AdminFactory.createAdmin();
-        applicationAdministrationApiClient.registerAdmin(admin);
+        CreateAdminResponse response = applicationAdministrationApiClient.registerAdmin(admin);
+        Assertions.assertTrue(adminManager.adminExistsById(response.getData().getStaffId()));
     }
 
     @TmsLink("357")
@@ -49,12 +55,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация рождения) - Валидный запрос")
     void approveBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -63,6 +67,7 @@ public class ApplicationAdministrationApiTests {
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
     }
 
     @TmsLink("337")
@@ -70,12 +75,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация брака) - Валидный запрос")
     void approveMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -84,6 +87,7 @@ public class ApplicationAdministrationApiTests {
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
     }
 
     @TmsLink("338")
@@ -91,12 +95,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация смерти) - Валидный запрос")
     void approveDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -105,6 +107,7 @@ public class ApplicationAdministrationApiTests {
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
     }
 
     @TmsLink("341")
@@ -112,12 +115,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация смерти) - Валидный запрос")
     void rejectDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -126,6 +127,7 @@ public class ApplicationAdministrationApiTests {
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
     }
 
     @TmsLink("339")
@@ -133,12 +135,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация рождения) - Валидный запрос")
     void rejectBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -147,6 +147,7 @@ public class ApplicationAdministrationApiTests {
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
     }
 
     @TmsLink("340")
@@ -154,12 +155,10 @@ public class ApplicationAdministrationApiTests {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация брака) - Валидный запрос")
     void rejectMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
-        Integer applicationId = createApplicationResponse.getData().getApplicationId();
+        int applicationId = applicationManager.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        CreateAdminResponse createAdminResponse = applicationAdministrationApiClient.registerAdmin(admin);
-        Integer staffId = createAdminResponse.getData().getStaffId();
+        int staffId = adminManager.createAdmin(admin);
 
         applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
@@ -168,5 +167,6 @@ public class ApplicationAdministrationApiTests {
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
     }
 }

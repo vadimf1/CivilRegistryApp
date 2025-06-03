@@ -1,9 +1,8 @@
 package org.example.ui;
 
 import io.qameta.allure.*;
-import org.example.api.client.ApplicationRegistrationApiClient;
+import org.example.db.ApplicationManager;
 import org.example.models.Admin;
-import org.example.models.CreateApplicationResponse;
 import org.example.ui.pages.AdminRegistrationDataPage;
 import org.example.ui.pages.ApplicationAdministrationPage;
 import org.example.utils.AdminFactory;
@@ -19,38 +18,38 @@ public class ApplicationAdministrationTests extends BaseUiTest {
 
     AdminRegistrationDataPage adminRegistrationDataPage;
     ApplicationAdministrationPage applicationAdministrationPage;
-    ApplicationRegistrationApiClient applicationRegistrationApiClient;
+    ApplicationManager applicationManager;
 
     @BeforeEach
     void setUp() {
         adminRegistrationDataPage = new AdminRegistrationDataPage();
         applicationAdministrationPage = new ApplicationAdministrationPage();
-        applicationRegistrationApiClient = new ApplicationRegistrationApiClient();
+        applicationManager = new ApplicationManager();
     }
 
     @TmsLink("157")
     @Test
     @DisplayName("Администрирование заявок: статус 'Одобрена' - E2E")
     void approveApplicationTest() {
-        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
+        int applicationId = applicationManager.createApplication(UserFactory.createUserForBirthRegistration());
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
         action.clickNext();
-        applicationAdministrationPage.approveApplicationByNumber(String.valueOf(response.getData().getApplicationId()));
-        applicationAdministrationPage.checkApplicationIsApproved(String.valueOf(response.getData().getApplicationId()));
+        applicationAdministrationPage.approveApplicationByNumber(String.valueOf(applicationId));
+        applicationAdministrationPage.checkApplicationIsApproved(String.valueOf(applicationId));
     }
 
     @TmsLink("157")
     @Test
     @DisplayName("Администрирование заявок: статус 'Отклонена' - E2E")
     void rejectApplicationTest() {
-        CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(UserFactory.createUserForBirthRegistration());
+        int applicationId = applicationManager.createApplication(UserFactory.createUserForBirthRegistration());
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
         action.clickNext();
-        applicationAdministrationPage.rejectApplicationByNumber(String.valueOf(response.getData().getApplicationId()));
-        applicationAdministrationPage.checkApplicationIsRejected(String.valueOf(response.getData().getApplicationId()));
+        applicationAdministrationPage.rejectApplicationByNumber(String.valueOf(applicationId));
+        applicationAdministrationPage.checkApplicationIsRejected(String.valueOf(applicationId));
     }
 }
