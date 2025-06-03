@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["data", "requestId"],
+  "properties": {
+    "requestId": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": ["staffid"],
+      "properties": {
+        "staffid": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

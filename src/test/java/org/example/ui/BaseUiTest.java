@@ -1,19 +1,26 @@
-package org.example;
+package org.example.ui;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Allure;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.ui.pages.MainPage;
 import org.example.ui.pages.PageAction;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 public class BaseUiTest {
     protected MainPage mainPage;
     protected PageAction action;
+
+    @BeforeAll
+    public static void setUpAllureListener() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true)
+                .includeSelenideSteps(false));
+    }
 
     @BeforeEach
     @Step("Открытие главной страницы и инициализация объектов")
@@ -26,16 +33,6 @@ public class BaseUiTest {
     @AfterEach
     @Step("Закрытие браузера после теста")
     public void closeSelenideDriver() {
-        attachScreenshot();
         Selenide.closeWebDriver();
-    }
-
-    private void attachScreenshot() {
-        try {
-            byte[] screenshot = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
-            Allure.getLifecycle().addAttachment("Screenshot", "image/png", "png", screenshot);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

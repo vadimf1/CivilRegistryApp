@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["data", "requestId"],
+  "properties": {
+    "requestId": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "dateofapplication",
+        "kindofapplication",
+        "statusofapplication"
+      ],
+      "properties": {
+        "dateofapplication": { "type": "string" },
+        "kindofapplication": { "type": "string" },
+        "statusofapplication": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

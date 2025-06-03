@@ -12,17 +12,23 @@ repositories {
 
 dependencies {
     implementation("com.codeborne:selenide:7.7.3")
+    implementation("com.github.javafaker:javafaker:1.0.2")
+    implementation("io.qameta.allure:allure-selenide:2.28.1")
+    implementation("io.qameta.allure:allure-rest-assured:2.28.1")
+    implementation("io.rest-assured:rest-assured:5.4.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation("ch.qos.logback:logback-classic:1.5.16")
+    implementation("io.rest-assured:json-schema-validator:5.4.0")
+
     testImplementation("org.junit.platform:junit-platform-launcher:1.12.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.12.2")
-    implementation("com.github.javafaker:javafaker:1.0.2")
     testImplementation("io.qameta.allure:allure-junit5:2.28.1")
-    implementation("io.qameta.allure:allure-selenide:2.28.1")
 
     compileOnly("org.projectlombok:lombok:1.18.36")
     annotationProcessor("org.projectlombok:lombok:1.18.36")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.2")
     runtimeOnly("org.aspectj:aspectjweaver:1.9.19")
 }
 
@@ -31,5 +37,6 @@ tasks.withType(JavaCompile) {
 }
 
 test {
+    systemProperties(System.getProperties())
     useJUnitPlatform()
 }

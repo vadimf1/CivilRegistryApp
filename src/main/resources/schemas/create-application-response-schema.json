@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["data", "requestId"],
+  "properties": {
+    "requestId": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "applicantid",
+        "citizenid",
+        "applicationid"
+      ],
+      "properties": {
+        "applicantid": { "type": "integer" },
+        "citizenid": { "type": "integer" },
+        "applicationid": { "type": "integer" },
+        "merrigecertificateid": { "type": "integer" },
+        "birthcertificateid": { "type": "integer" },
+        "deathcertificateid": { "type": "integer" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
