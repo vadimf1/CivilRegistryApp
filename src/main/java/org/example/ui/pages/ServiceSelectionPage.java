@@ -16,30 +16,30 @@ public class ServiceSelectionPage {
 
     @Step("Проверка загрузки страницы выбора услуги")
     private void isLoaded() {
-        log.info("Проверка загрузки страницы выбора услуги");
         MARRIAGE_REGISTRATION_BUTTON.shouldBe(Condition.visible, Duration.ofSeconds(10));
         BIRTH_REGISTRATION_BUTTON.shouldBe(Condition.visible, Duration.ofSeconds(10));
         DEATH_REGISTRATION_BUTTON.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        log.info("Проверка загрузки страницы выбора услуги");
     }
 
     @Step("Выбор услуги: Регистрация брака")
     public void chooseMarriageRegistration() {
-        log.info("Выбор услуги: Регистрация брака");
         isLoaded();
         MARRIAGE_REGISTRATION_BUTTON.click();
+        log.info("Выбор услуги: Регистрация брака");
     }
 
     @Step("Выбор услуги: Регистрация рождения")
     public void chooseBirthRegistration() {
-        log.info("Выбор услуги: Регистрация рождения");
         isLoaded();
         BIRTH_REGISTRATION_BUTTON.click();
+        log.info("Выбор услуги: Регистрация рождения");
     }
 
     @Step("Выбор услуги: Регистрация смерти")
     public void chooseDeathRegistration() {
-        log.info("Выбор услуги: Регистрация смерти");
         isLoaded();
         DEATH_REGISTRATION_BUTTON.click();
+        log.info("Выбор услуги: Регистрация смерти");
     }
 }

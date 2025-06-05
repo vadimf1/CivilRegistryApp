@@ -16,27 +16,27 @@ public class DeathRegistrationDataPage {
 
     @Step("Проверка загрузки страницы регистрации смерти")
     private void isLoaded() {
-        log.info("Проверка загрузки страницы регистрации смерти");
         INPUT_DEATH_DATE.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        log.info("Проверка загрузки страницы регистрации смерти");
     }
 
     @Step("Ввод даты смерти: {deathDate}")
     private void fillDeathDate(String deathDate) {
-        log.info("Ввод даты смерти: {}", deathDate);
         INPUT_DEATH_DATE.setValue(deathDate);
+        log.info("Ввод даты смерти: {}", deathDate);
     }
 
     @Step("Ввод места смерти: {deathPlace}")
     private void fillDeathPlace(String deathPlace) {
-        log.info("Ввод места смерти: {}", deathPlace);
         INPUT_DEATH_PLACE.setValue(deathPlace);
+        log.info("Ввод места смерти: {}", deathPlace);
     }
 
     @Step("Заполнение формы регистрации смерти")
     public void fillDeathRegistrationDataForm(User user) {
-        log.info("Заполнение формы регистрации смерти");
         isLoaded();
         fillDeathDate(user.getDeathDate());
         fillDeathPlace(user.getDeathPlace());
+        log.info("Заполнение формы регистрации смерти");
     }
 }

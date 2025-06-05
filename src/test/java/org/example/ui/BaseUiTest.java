@@ -4,15 +4,19 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.example.db.connection.ConnectionHolder;
 import org.example.ui.pages.MainPage;
 import org.example.ui.pages.PageAction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.sql.Connection;
+
 public class BaseUiTest {
     protected MainPage mainPage;
     protected PageAction action;
+    protected Connection connection;
 
     @BeforeAll
     public static void setUpAllureListener() {
@@ -34,5 +38,15 @@ public class BaseUiTest {
     @Step("Закрытие браузера после теста")
     public void closeSelenideDriver() {
         Selenide.closeWebDriver();
+    }
+
+    @BeforeEach
+    void connectToDatabase() {
+        connection = ConnectionHolder.getConnection();
+    }
+
+    @AfterEach
+    void closeDatabaseConnection() {
+        ConnectionHolder.closeConnection(connection);
     }
 }

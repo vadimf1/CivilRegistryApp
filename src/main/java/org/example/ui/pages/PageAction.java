@@ -14,25 +14,25 @@ public class PageAction {
 
     @Step("Нажатие кнопки 'Далее'")
     public void clickNext() {
-        log.info("Нажатие кнопки 'Далее'");
         NEXT_BUTTON.click();
+        log.info("Нажатие кнопки 'Далее'");
     }
 
     @Step("Нажатие кнопки 'Завершить'")
     public void clickFinish() {
-        log.info("Нажатие кнопки 'Завершить'");
         FINISH_BUTTON.click();
+        log.info("Нажатие кнопки 'Завершить'");
     }
 
     @Step("Нажатие кнопки 'Обновить'")
     public void clickRefresh() {
-        log.info("Нажатие кнопки 'Обновить'");
         REFRESH_BUTTON.click();
+        log.info("Нажатие кнопки 'Обновить'");
     }
 
     @Step("Нажатие кнопки 'Закрыть'")
     public void clickClose() {
-        log.info("Нажатие кнопки 'Закрыть'");
         CLOSE_BUTTON.click();
+        log.info("Нажатие кнопки 'Закрыть'");
     }
 }

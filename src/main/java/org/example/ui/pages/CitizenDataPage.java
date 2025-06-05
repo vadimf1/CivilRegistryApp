@@ -21,55 +21,54 @@ public class CitizenDataPage {
 
     @Step("Проверка загрузки страницы ввода данных гражданина")
     private void isLoaded() {
-        log.info("Проверка загрузки страницы ввода данных гражданина");
         INPUT_LAST_NAME.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        log.info("Проверка загрузки страницы ввода данных гражданина");
     }
 
     @Step("Ввод фамилии гражданина: {lastName}")
     private void fillLastName(String lastName) {
-        log.info("Ввод фамилии гражданина: {}", lastName);
         INPUT_LAST_NAME.setValue(lastName);
+        log.info("Ввод фамилии гражданина: {}", lastName);
     }
 
     @Step("Ввод имени гражданина: {firstName}")
     private void fillFirstName(String firstName) {
-        log.info("Ввод имени гражданина: {}", firstName);
         INPUT_FIRST_NAME.setValue(firstName);
+        log.info("Ввод имени гражданина: {}", firstName);
     }
 
     @Step("Ввод отчества гражданина: {middleName}")
     private void fillMiddleName(String middleName) {
-        log.info("Ввод отчества гражданина: {}", middleName);
         INPUT_MIDDLE_NAME.setValue(middleName);
+        log.info("Ввод отчества гражданина: {}", middleName);
     }
 
     @Step("Ввод даты рождения: {birthDate}")
     private void fillBirthDate(String birthDate) {
-        log.info("Ввод даты рождения: {}", birthDate);
         INPUT_BIRTH_DATE.setValue(birthDate);
+        log.info("Ввод даты рождения: {}", birthDate);
     }
 
     @Step("Ввод номера паспорта: {passportNumber}")
     private void fillPassportNumber(String passportNumber) {
-        log.info("Ввод номера паспорта: {}", passportNumber);
         INPUT_PASSPORT_NUMBER.setValue(passportNumber);
+        log.info("Ввод номера паспорта: {}", passportNumber);
     }
 
     @Step("Ввод пола: {gender}")
     private void fillGender(String gender) {
-        log.info("Ввод пола: {}", gender);
         INPUT_GENDER.setValue(gender);
+        log.info("Ввод пола: {}", gender);
     }
 
     @Step("Ввод адреса прописки: {address}")
     private void fillAddress(String address) {
-        log.info("Ввод адреса прописки: {}", address);
         INPUT_ADDRESS.setValue(address);
+        log.info("Ввод адреса прописки: {}", address);
     }
 
     @Step("Заполнение формы данных гражданина")
     public void fillCitizenDataForm(User user) {
-        log.info("Заполнение формы данных гражданина");
         isLoaded();
         fillLastName(user.getCitizenLastName());
         fillFirstName(user.getCitizenFirstName());
@@ -78,5 +77,6 @@ public class CitizenDataPage {
         fillPassportNumber(user.getCitizenPassportNumber());
         fillGender(user.getCitizenGender());
         fillAddress(user.getCitizenAddress());
+        log.info("Заполнение формы данных гражданина");
     }
 }

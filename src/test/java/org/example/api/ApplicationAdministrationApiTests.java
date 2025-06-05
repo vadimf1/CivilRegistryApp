@@ -5,14 +5,15 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
 import org.example.api.client.ApplicationAdministrationApiClient;
 import org.example.api.client.ApplicationRegistrationApiClient;
-import org.example.db.AdminManager;
-import org.example.db.ApplicationManager;
+import org.example.db.managers.AdminManager;
+import org.example.db.managers.ApplicationManager;
 import org.example.models.Admin;
 import org.example.models.ChangeApplicationStatusRequest;
+import org.example.models.ChangeApplicationStatusResponse;
 import org.example.models.CreateAdminResponse;
 import org.example.models.User;
-import org.example.utils.AdminFactory;
-import org.example.utils.UserFactory;
+import org.example.utils.factory.AdminFactory;
+import org.example.utils.factory.UserFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 @Epic("API Администрирование")
 @Feature("Работа с заявками")
-public class ApplicationAdministrationApiTests {
+public class ApplicationAdministrationApiTests extends BaseApiTest {
     ApplicationAdministrationApiClient applicationAdministrationApiClient;
     ApplicationRegistrationApiClient applicationRegistrationApiClient;
     ApplicationManager applicationManager;
@@ -30,8 +31,8 @@ public class ApplicationAdministrationApiTests {
     void setUp() {
         applicationAdministrationApiClient = new ApplicationAdministrationApiClient();
         applicationRegistrationApiClient = new ApplicationRegistrationApiClient();
-        applicationManager = new ApplicationManager();
-        adminManager = new AdminManager();
+        applicationManager = new ApplicationManager(connection);
+        adminManager = new AdminManager(connection);
     }
 
     @TmsLink("334")
@@ -41,6 +42,7 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse response = applicationAdministrationApiClient.registerAdmin(admin);
         Assertions.assertTrue(adminManager.adminExistsById(response.getData().getStaffId()));
+        adminManager.deleteAdminById(response.getData().getStaffId());
     }
 
     @TmsLink("357")
@@ -60,14 +62,19 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteBirthApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 
     @TmsLink("337")
@@ -80,14 +87,20 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
+        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteMarriageApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 
     @TmsLink("338")
@@ -100,14 +113,20 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("approved")
                         .build()
         );
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
+        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteDeathApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 
     @TmsLink("341")
@@ -120,14 +139,19 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteDeathApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 
     @TmsLink("339")
@@ -140,14 +164,19 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteBirthApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 
     @TmsLink("340")
@@ -160,13 +189,18 @@ public class ApplicationAdministrationApiTests {
         Admin admin = AdminFactory.createAdmin();
         int staffId = adminManager.createAdmin(admin);
 
-        applicationAdministrationApiClient.changeApplicationStatus(
+        ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
                         .action("rejected")
                         .build()
         );
+        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
+        applicationManager.deleteMarriageApplicationById(applicationId);
+        adminManager.deleteAdminById(staffId);
     }
 }

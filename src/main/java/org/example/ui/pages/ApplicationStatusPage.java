@@ -17,16 +17,15 @@ public class ApplicationStatusPage {
 
     @Step("Проверка, что страница со статусом заявки загружена")
     public void checkIsLoaded() {
-        log.info("Проверка, что страница со статусом заявки загружена");
         applicationInfo.shouldBe(
                 Condition.matchText("Ваша заявка № \\d+ отправлена на рассмотрение\\."),
                 Duration.ofSeconds(10)
         );
+        log.info("Проверка, что страница со статусом заявки загружена");
     }
 
     @Step("Получение номера заявки")
     public String getApplicationNumber() {
-        log.info("Получение номера заявки");
         checkIsLoaded();
         String text = applicationInfo.getText();
 
@@ -45,13 +44,13 @@ public class ApplicationStatusPage {
 
     @Step("Проверка, что заявка одобрена")
     public void checkApplicationIsApproved() {
-        log.info("Проверка, что заявка одобрена");
         applicationStatusInfo.shouldHave(Condition.text("Одобрена"));
+        log.info("Проверка, что заявка одобрена");
     }
 
     @Step("Проверка, что заявка отклонена")
     public void checkApplicationIsRejected() {
-        log.info("Проверка, что заявка отклонена");
         applicationStatusInfo.shouldHave(Condition.text("Отклонена"));
+        log.info("Проверка, что заявка отклонена");
     }
 }

@@ -9,7 +9,7 @@ import org.example.ui.pages.CitizenDataPage;
 import org.example.ui.pages.DeathRegistrationDataPage;
 import org.example.ui.pages.MarriageRegistrationDataPage;
 import org.example.ui.pages.ServiceSelectionPage;
-import org.example.utils.UserFactory;
+import org.example.utils.factory.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

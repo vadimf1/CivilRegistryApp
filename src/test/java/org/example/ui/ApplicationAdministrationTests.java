@@ -1,12 +1,12 @@
 package org.example.ui;
 
 import io.qameta.allure.*;
-import org.example.db.ApplicationManager;
+import org.example.db.managers.ApplicationManager;
 import org.example.models.Admin;
 import org.example.ui.pages.AdminRegistrationDataPage;
 import org.example.ui.pages.ApplicationAdministrationPage;
-import org.example.utils.AdminFactory;
-import org.example.utils.UserFactory;
+import org.example.utils.factory.AdminFactory;
+import org.example.utils.factory.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     void setUp() {
         adminRegistrationDataPage = new AdminRegistrationDataPage();
         applicationAdministrationPage = new ApplicationAdministrationPage();
-        applicationManager = new ApplicationManager();
+        applicationManager = new ApplicationManager(connection);
     }
 
     @TmsLink("157")

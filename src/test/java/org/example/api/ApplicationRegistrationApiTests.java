@@ -4,10 +4,10 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
 import org.example.api.client.ApplicationRegistrationApiClient;
-import org.example.db.ApplicationManager;
+import org.example.db.managers.ApplicationManager;
 import org.example.models.CreateApplicationResponse;
 import org.example.models.User;
-import org.example.utils.UserFactory;
+import org.example.utils.factory.UserFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,14 +15,14 @@ import org.junit.jupiter.api.Test;
 
 @Epic("API Тесты регистрации заявок")
 @Feature("Подача заявки пользователем")
-public class ApplicationRegistrationApiTests {
+public class ApplicationRegistrationApiTests extends BaseApiTest {
     ApplicationRegistrationApiClient applicationRegistrationApiClient;
     ApplicationManager applicationManager;
 
     @BeforeEach
     void setUp() {
         applicationRegistrationApiClient = new ApplicationRegistrationApiClient();
-        applicationManager = new ApplicationManager();
+        applicationManager = new ApplicationManager(connection);
     }
 
     @TmsLink("328")
@@ -32,6 +32,7 @@ public class ApplicationRegistrationApiTests {
         User user = UserFactory.createUserForBirthRegistration();
         CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
         Assertions.assertTrue(applicationManager.applicationExistsById(response.getData().getApplicationId()));
+        applicationManager.deleteBirthApplicationById(response.getData().getApplicationId());
     }
 
     @TmsLink("327")
@@ -41,6 +42,7 @@ public class ApplicationRegistrationApiTests {
         User user = UserFactory.createUserForMarriageRegistration();
         CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
         Assertions.assertTrue(applicationManager.applicationExistsById(response.getData().getApplicationId()));
+        applicationManager.deleteMarriageApplicationById(response.getData().getApplicationId());
     }
 
     @TmsLink("330")
@@ -50,6 +52,7 @@ public class ApplicationRegistrationApiTests {
         User user = UserFactory.createUserForDeathRegistration();
         CreateApplicationResponse response = applicationRegistrationApiClient.createApplication(user);
         Assertions.assertTrue(applicationManager.applicationExistsById(response.getData().getApplicationId()));
+        applicationManager.deleteDeathApplicationById(response.getData().getApplicationId());
     }
 
     @TmsLink("353")
@@ -61,5 +64,6 @@ public class ApplicationRegistrationApiTests {
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
 
         applicationRegistrationApiClient.getApplStatus(applicationId);
+        applicationManager.deleteDeathApplicationById(createApplicationResponse.getData().getApplicationId());
     }
 }

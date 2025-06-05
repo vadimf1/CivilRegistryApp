@@ -1,5 +1,7 @@
-package org.example.db;
+package org.example.db.managers;
 
+import org.example.db.connection.ConnectionHolder;
+import org.example.db.exception.DatabaseException;
 import org.example.models.Admin;
 
 import java.sql.Connection;
@@ -11,8 +13,8 @@ import java.sql.SQLException;
 public class AdminManager {
     private final Connection connection;
 
-    public AdminManager() {
-        this.connection = ConnectionHolder.getConnection();
+    public AdminManager(Connection connection) {
+        this.connection = connection;
     }
 
     public int createAdmin(Admin admin) {
@@ -31,10 +33,10 @@ public class AdminManager {
             if (rs.next()) {
                 return rs.getInt("staffid");
             } else {
-                throw new SQLException("Failed to insert staff (admin)");
+                throw new DatabaseException("Failed to insert staff (admin)");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException(e);
         }
     }
 
@@ -46,7 +48,17 @@ public class AdminManager {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to check admin existence with id=" + staffId, e);
+            throw new DatabaseException("Failed to check admin existence with id=" + staffId, e);
+        }
+    }
+
+    public void deleteAdminById(int staffId) {
+        String sql = "DELETE FROM staff WHERE staffid = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, staffId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
         }
     }
 

@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.utils.factory;
 
 import com.github.javafaker.Faker;
 import lombok.experimental.UtilityClass;

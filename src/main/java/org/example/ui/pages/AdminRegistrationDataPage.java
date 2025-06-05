@@ -21,50 +21,49 @@ public class AdminRegistrationDataPage {
 
     @Step("Проверка загрузки страницы регистрации администратора")
     private void isLoaded() {
-        log.info("Проверка загрузки страница администратора");
         PAGE_TITLE.shouldBe(Condition.visible, Duration.ofSeconds(10));
         INPUT_LAST_NAME.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        log.info("Проверка загрузки страница администратора");
     }
 
     @Step("Ввод фамилии: {lastName}")
     private void fillLastName(String lastName) {
-        log.info("Ввод фамилии: {}", lastName);
         INPUT_LAST_NAME.setValue(lastName);
+        log.info("Ввод фамилии: {}", lastName);
     }
 
     @Step("Ввод имени: {firstName}")
     private void fillFirstName(String firstName) {
-        log.info("Ввод имени: {}", firstName);
         INPUT_FIRST_NAME.setValue(firstName);
+        log.info("Ввод имени: {}", firstName);
     }
 
     @Step("Ввод отчества: {middleName}")
     private void fillMiddleName(String middleName) {
-        log.info("Ввод отчества: {}", middleName);
         INPUT_MIDDLE_NAME.setValue(middleName);
+        log.info("Ввод отчества: {}", middleName);
     }
 
     @Step("Ввод номера телефона: {phoneNumber}")
     public void fillPhoneNumber(String phoneNumber) {
-        log.info("Ввод номера телефона: {}", phoneNumber);
         INPUT_PHONE_NUMBER.setValue(phoneNumber);
+        log.info("Ввод номера телефона: {}", phoneNumber);
     }
 
     @Step("Ввод номера паспорта: {passportNumber}")
     private void fillPassportNumber(String passportNumber) {
-        log.info("Ввод номера паспорта: {}", passportNumber);
         INPUT_PASSPORT_NUMBER.setValue(passportNumber);
+        log.info("Ввод номера паспорта: {}", passportNumber);
     }
 
     @Step("Ввод даты рождения: {birthDate}")
     private void fillBirthDate(String birthDate) {
-        log.info("Ввод даты рождения: {}", birthDate);
         INPUT_BIRTH_DATE.setValue(birthDate);
+        log.info("Ввод даты рождения: {}", birthDate);
     }
 
     @Step("Заполнение формы регистрации администратора")
     public void fillAdminRegistrationDataForm(Admin admin) {
-        log.info("Заполнение формы администратора: {}", admin);
         isLoaded();
         fillLastName(admin.getLastName());
         fillFirstName(admin.getFirstName());
@@ -72,5 +71,6 @@ public class AdminRegistrationDataPage {
         fillPhoneNumber(admin.getPhoneNumber());
         fillPassportNumber(admin.getPassportNumber());
         fillBirthDate(admin.getBirthDate());
+        log.info("Заполнение формы администратора: {}", admin);
     }
 }

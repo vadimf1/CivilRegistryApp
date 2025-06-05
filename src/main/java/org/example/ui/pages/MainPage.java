@@ -20,28 +20,28 @@ public class MainPage {
 
     @Step("Открытие главной страницы")
     public void openMainPage() {
-        log.info("Открытие главной страницы");
         Selenide.open(PropertyUtil.getProperty(BASE_URI_KEY), "", System.getProperty(LOGIN_KEY), System.getProperty(PASSWORD_KEY));
+        log.info("Открытие главной страницы");
     }
 
     @Step("Проверка, что главная страница загружена")
     private void isLoaded() {
-        log.info("Проверка, что главная страница загружена");
         USER_LOGIN_BUTTON.shouldBe(Condition.visible, Duration.ofSeconds(10));
         ADMIN_LOGIN_BUTTON.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        log.info("Проверка, что главная страница загружена");
     }
 
     @Step("Вход как пользователь")
     public void enterAsUser() {
-        log.info("Вход как пользователь");
         isLoaded();
         USER_LOGIN_BUTTON.click();
+        log.info("Вход как пользователь");
     }
 
     @Step("Вход как администратор")
     public void enterAsAdmin() {
-        log.info("Вход как администратор");
         isLoaded();
         ADMIN_LOGIN_BUTTON.click();
+        log.info("Вход как администратор");
     }
 }
