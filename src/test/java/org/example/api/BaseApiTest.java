@@ -16,6 +16,6 @@ public class BaseApiTest {
 
     @AfterEach
     void closeDatabaseConnection() {
-        ConnectionHolder.closeConnection(connection);
+        ConnectionHolder.closeConnection();
     }
 }

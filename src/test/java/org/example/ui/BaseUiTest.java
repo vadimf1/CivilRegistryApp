@@ -47,6 +47,6 @@ public class BaseUiTest {
 
     @AfterEach
     void closeDatabaseConnection() {
-        ConnectionHolder.closeConnection(connection);
+        ConnectionHolder.closeConnection();
     }
 }

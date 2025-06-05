@@ -1,6 +1,7 @@
 package org.example.ui;
 
 import io.qameta.allure.*;
+import org.example.db.managers.ApplicationManager;
 import org.example.models.User;
 import org.example.ui.pages.ApplicantDataPage;
 import org.example.ui.pages.ApplicationStatusPage;
@@ -21,6 +22,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     ServiceSelectionPage serviceSelectionPage;
     CitizenDataPage citizenDataPage;
     ApplicationStatusPage applicationStatusPage;
+    ApplicationManager applicationManager;
 
     @BeforeEach
     void setUp() {
@@ -28,6 +30,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         serviceSelectionPage = new ServiceSelectionPage();
         citizenDataPage = new CitizenDataPage();
         applicationStatusPage = new ApplicationStatusPage();
+        applicationManager = new ApplicationManager(connection);
     }
 
     @TmsLink("155")
@@ -46,6 +49,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
+        applicationManager.deleteDeathApplicationById(applicationManager.getLastApplicationId());
     }
 
     @TmsLink("156")
@@ -64,6 +68,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
+        applicationManager.deleteBirthApplicationById(applicationManager.getLastApplicationId());
     }
 
     @TmsLink("154")
@@ -82,5 +87,6 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
+        applicationManager.deleteMarriageApplicationById(applicationManager.getLastApplicationId());
     }
 }

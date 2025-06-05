@@ -53,6 +53,20 @@ public class ApplicationManager {
         }
     }
 
+    public int getLastApplicationId() {
+        String sql = "SELECT applicationid FROM applications ORDER BY applicationid DESC LIMIT 1";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("applicationid");
+            } else {
+                throw new DatabaseException("Applications are empty");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+    }
+
     public void deleteDeathApplicationById(int applicationId) {
         int[] ids = getRelatedIds(applicationId);
         int citizenId = ids[0];

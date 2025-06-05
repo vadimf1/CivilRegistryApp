@@ -1,6 +1,8 @@
 package org.example.ui;
 
 import io.qameta.allure.*;
+import org.example.db.managers.AdminManager;
+import org.example.db.managers.ApplicationManager;
 import org.example.models.Admin;
 import org.example.models.User;
 import org.example.ui.pages.*;
@@ -19,6 +21,8 @@ public class ApplicationFlowTests extends BaseUiTest {
     ApplicationStatusPage applicationStatusPage;
     AdminRegistrationDataPage adminRegistrationDataPage;
     ApplicationAdministrationPage applicationAdministrationPage;
+    ApplicationManager applicationManager;
+    AdminManager adminManager;
 
     @BeforeEach
     void setUp() {
@@ -28,6 +32,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         applicationStatusPage = new ApplicationStatusPage();
         adminRegistrationDataPage = new AdminRegistrationDataPage();
         applicationAdministrationPage = new ApplicationAdministrationPage();
+        applicationManager = new ApplicationManager(connection);
+        adminManager = new AdminManager(connection);
     }
 
     @TmsLink("367")
@@ -60,6 +66,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
+        applicationManager.deleteDeathApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 
     @TmsLink("368")
@@ -92,6 +100,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
+        applicationManager.deleteDeathApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 
     @TmsLink("361")
@@ -124,6 +134,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
+        applicationManager.deleteBirthApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 
     @TmsLink("362")
@@ -156,6 +168,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
+        applicationManager.deleteBirthApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 
     @TmsLink("365")
@@ -188,6 +202,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsApproved();
+        applicationManager.deleteMarriageApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 
     @TmsLink("366")
@@ -220,5 +236,7 @@ public class ApplicationFlowTests extends BaseUiTest {
         mainPage.enterAsUser();
         action.clickRefresh();
         applicationStatusPage.checkApplicationIsRejected();
+        applicationManager.deleteMarriageApplicationById(applicationManager.getLastApplicationId());
+        adminManager.deleteAdminById(adminManager.getLastAdminId());
     }
 }
