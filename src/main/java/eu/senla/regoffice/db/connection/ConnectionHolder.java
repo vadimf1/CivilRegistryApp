@@ -2,11 +2,13 @@ package eu.senla.regoffice.db.connection;
 
 import lombok.experimental.UtilityClass;
 import eu.senla.regoffice.utils.PropertyUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Slf4j
 @UtilityClass
 public class ConnectionHolder {
     private Connection connection = null;
@@ -14,6 +16,9 @@ public class ConnectionHolder {
     public Connection getConnection() {
         try {
             if (connection == null) {
+                log.info("Url: " + PropertyUtil.getProperty("dbUrl"));
+                log.info("User: " + PropertyUtil.getProperty("dbUser"));
+                log.info("Password: " + PropertyUtil.getProperty("dbPassword"));
                 connection = DriverManager.getConnection(PropertyUtil.getProperty("db.url"), System.getProperty("db.login"), System.getProperty("db.password"));
             }
             return connection;
