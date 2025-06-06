@@ -16,9 +16,9 @@ public class ConnectionHolder {
     public Connection getConnection() {
         try {
             if (connection == null) {
-                log.info("Url: " + PropertyUtil.getProperty("dbUrl"));
-                log.info("User: " + System.getProperty("dbUser"));
-                log.info("Password: " + System.getProperty("dbPassword"));
+                log.info("Url: " + PropertyUtil.getProperty("db.url"));
+                log.info("User: " + System.getProperty("db.login"));
+                log.info("Password: " + System.getProperty("db.password"));
                 connection = DriverManager.getConnection(PropertyUtil.getProperty("db.url"), System.getProperty("db.login"), System.getProperty("db.password"));
             }
             return connection;
