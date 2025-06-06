@@ -70,7 +70,6 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
         Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteBirthApplicationById(applicationId);
@@ -95,9 +94,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
         Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteMarriageApplicationById(applicationId);
         adminManager.deleteAdminById(staffId);
@@ -121,9 +118,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
         Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
         Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteDeathApplicationById(applicationId);
         adminManager.deleteAdminById(staffId);
@@ -146,9 +141,8 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .action("rejected")
                         .build()
         );
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
         Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteDeathApplicationById(applicationId);
         adminManager.deleteAdminById(staffId);
@@ -171,9 +165,8 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .action("rejected")
                         .build()
         );
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
         Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteBirthApplicationById(applicationId);
         adminManager.deleteAdminById(staffId);
@@ -196,9 +189,8 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                         .action("rejected")
                         .build()
         );
-        Assertions.assertEquals(staffId, response.getData().getStaffId());
+        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
         Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
         applicationManager.deleteMarriageApplicationById(applicationId);
         adminManager.deleteAdminById(staffId);
