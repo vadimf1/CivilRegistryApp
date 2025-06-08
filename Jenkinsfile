@@ -5,6 +5,11 @@ pipeline {
         cron('0 2 * * *')
     }
 
+    environment {
+        JAVA_HOME = "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+
     parameters {
         string(defaultValue: "chrome", description: "Browser type", name: "BROWSER_TYPE")
         string(defaultValue: "1920x1080", description: "Browser size", name: "BROWSER_SIZE")
