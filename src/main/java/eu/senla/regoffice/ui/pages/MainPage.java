@@ -1,6 +1,7 @@
 package eu.senla.regoffice.ui.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -16,7 +17,7 @@ public class MainPage {
 
     @Step("Открытие главной страницы")
     public void openMainPage() {
-        Selenide.open(PropertyUtil.getProperty("baseUri"), "", System.getProperty("app.login"), System.getProperty("app.password"));
+        Selenide.open(Configuration.baseUrl, "", System.getProperty("app.login"), System.getProperty("app.password"));
         log.info("Открытие главной страницы");
     }
 
