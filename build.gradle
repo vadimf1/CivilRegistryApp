@@ -39,6 +39,7 @@ tasks.withType(JavaCompile) {
 }
 
 test {
+    maxParallelForks = 3
     systemProperties(System.getProperties())
     useJUnitPlatform()
 }

@@ -1,6 +1,5 @@
 package eu.senla.regoffice.db.managers;
 
-import eu.senla.regoffice.db.exception.DatabaseException;
 import eu.senla.regoffice.models.User;
 
 import java.sql.Connection;
@@ -22,7 +21,7 @@ public class ApplicationManager {
             int applicantId = insertApplicant(user);
             return insertApplication(user, citizenId, applicantId);
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -34,7 +33,7 @@ public class ApplicationManager {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to check application existence with id=" + applicationId, e);
+            throw new RuntimeException("Failed to check application existence with id=" + applicationId, e);
         }
     }
 
@@ -46,10 +45,10 @@ public class ApplicationManager {
             if (rs.next()) {
                 return rs.getString("statusofapplication");
             } else {
-                throw new DatabaseException("No application found with id = " + applicationId);
+                throw new RuntimeException("No application found with id = " + applicationId);
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,10 +59,10 @@ public class ApplicationManager {
             if (rs.next()) {
                 return rs.getInt("applicationid");
             } else {
-                throw new DatabaseException("Applications are empty");
+                throw new RuntimeException("Applications are empty");
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -123,7 +122,7 @@ public class ApplicationManager {
             stmt.setInt(1, citizenId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete death certificate with citizenId = " + citizenId, e);
+            throw new RuntimeException("Failed to delete death certificate with citizenId = " + citizenId, e);
         }
     }
 
@@ -133,7 +132,7 @@ public class ApplicationManager {
             stmt.setInt(1, citizenId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete birth certificate with citizenId = " + citizenId, e);
+            throw new RuntimeException("Failed to delete birth certificate with citizenId = " + citizenId, e);
         }
     }
 
@@ -143,7 +142,7 @@ public class ApplicationManager {
             stmt.setInt(1, citizenId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete marriage certificate with citizenId = " + citizenId, e);
+            throw new RuntimeException("Failed to delete marriage certificate with citizenId = " + citizenId, e);
         }
     }
 
@@ -153,7 +152,7 @@ public class ApplicationManager {
             stmt.setInt(1, applicationId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete application with id = " + applicationId, e);
+            throw new RuntimeException("Failed to delete application with id = " + applicationId, e);
         }
     }
 
@@ -163,7 +162,7 @@ public class ApplicationManager {
             stmt.setInt(1, citizenId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete citizen with id = " + citizenId, e);
+            throw new RuntimeException("Failed to delete citizen with id = " + citizenId, e);
         }
     }
 
@@ -173,7 +172,7 @@ public class ApplicationManager {
             stmt.setInt(1, applicantId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to delete applicant with id = " + applicantId, e);
+            throw new RuntimeException("Failed to delete applicant with id = " + applicantId, e);
         }
     }
 
