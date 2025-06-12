@@ -42,15 +42,9 @@ public class ApplicationStatusPage {
         }
     }
 
-    @Step("Проверка, что заявка одобрена")
-    public void checkApplicationIsApproved() {
-        applicationStatusInfo.shouldHave(Condition.text("Одобрена"));
-        log.info("Проверка, что заявка одобрена");
-    }
-
-    @Step("Проверка, что заявка отклонена")
-    public void checkApplicationIsRejected() {
-        applicationStatusInfo.shouldHave(Condition.text("Отклонена"));
-        log.info("Проверка, что заявка отклонена");
+    @Step("Проверка, что заявка имеет статус: {expectedStatus}")
+    public void checkApplicationStatus(String expectedStatus) {
+        applicationStatusInfo.shouldHave(Condition.text(expectedStatus));
+        log.info("Проверка, что заявка имеет статус: {}", expectedStatus);
     }
 }

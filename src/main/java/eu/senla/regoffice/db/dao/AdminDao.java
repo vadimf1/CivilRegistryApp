@@ -1,6 +1,7 @@
-package eu.senla.regoffice.db.managers;
+package eu.senla.regoffice.db.dao;
 
 import eu.senla.regoffice.models.Admin;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -8,12 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AdminManager {
+@RequiredArgsConstructor
+public class AdminDao {
     private final Connection connection;
-
-    public AdminManager(Connection connection) {
-        this.connection = connection;
-    }
 
     public int createAdmin(Admin admin) {
         String sql = """
@@ -73,5 +71,4 @@ public class AdminManager {
             throw new RuntimeException(e);
         }
     }
-
 }

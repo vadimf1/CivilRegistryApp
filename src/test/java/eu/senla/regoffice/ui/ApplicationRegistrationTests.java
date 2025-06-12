@@ -1,7 +1,8 @@
 package eu.senla.regoffice.ui;
 
+import eu.senla.regoffice.db.service.DbService;
+import eu.senla.regoffice.models.ApplicationType;
 import io.qameta.allure.*;
-import eu.senla.regoffice.db.managers.ApplicationManager;
 import eu.senla.regoffice.models.User;
 import eu.senla.regoffice.ui.pages.ApplicantDataPage;
 import eu.senla.regoffice.ui.pages.ApplicationStatusPage;
@@ -13,8 +14,10 @@ import eu.senla.regoffice.ui.pages.ServiceSelectionPage;
 import eu.senla.regoffice.factory.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+@Tag("UI")
 @Epic("E2E тесты регистрации")
 @Feature("Подача заявки пользователем")
 public class ApplicationRegistrationTests extends BaseUiTest {
@@ -22,7 +25,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
     ServiceSelectionPage serviceSelectionPage;
     CitizenDataPage citizenDataPage;
     ApplicationStatusPage applicationStatusPage;
-    ApplicationManager applicationManager;
+    DbService dbService;
 
     @BeforeEach
     void setUp() {
@@ -30,7 +33,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         serviceSelectionPage = new ServiceSelectionPage();
         citizenDataPage = new CitizenDataPage();
         applicationStatusPage = new ApplicationStatusPage();
-        applicationManager = new ApplicationManager(connection);
+        dbService = new DbService(connection);
     }
 
     @TmsLink("155")
@@ -49,7 +52,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationManager.deleteDeathApplicationById(applicationManager.getLastApplicationId());
+        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.DEATH);
     }
 
     @TmsLink("156")
@@ -68,7 +71,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationManager.deleteBirthApplicationById(applicationManager.getLastApplicationId());
+        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.BIRTH);
     }
 
     @TmsLink("154")
@@ -87,6 +90,6 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        applicationManager.deleteMarriageApplicationById(applicationManager.getLastApplicationId());
+        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.MARRIAGE);
     }
 }
