@@ -56,6 +56,15 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            allure([
+                reportBuildPolicy: "ALWAYS",
+                results: [[path: "build/allure-results"]]
+            ])
+        }
+    }
 //
 //     post {
 //         always {
