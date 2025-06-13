@@ -53,7 +53,6 @@ tasks.register('testUi', Test) {
 }
 
 test {
-    maxParallelForks = 3
     systemProperties(System.getProperties())
     useJUnitPlatform()
 }
