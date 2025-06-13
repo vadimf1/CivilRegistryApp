@@ -1,11 +1,8 @@
 package eu.senla.regoffice.ui;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import eu.senla.regoffice.ui.config.SelenideConfig;
+import eu.senla.regoffice.config.DriverSettings;
 import io.qameta.allure.Step;
-import io.qameta.allure.selenide.AllureSelenide;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
 import eu.senla.regoffice.ui.pages.MainPage;
 import eu.senla.regoffice.ui.pages.PageAction;
@@ -23,12 +20,8 @@ public class BaseUiTest {
 
     @BeforeAll
     public static void baseSetUp() {
-        SelenideConfig.setUp();
+        DriverSettings.setUp();
         connection = ConnectionHolder.getConnection();
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true)
-                .includeSelenideSteps(false));
     }
 
     @BeforeEach

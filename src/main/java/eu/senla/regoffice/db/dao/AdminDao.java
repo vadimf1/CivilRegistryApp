@@ -1,7 +1,7 @@
-package eu.senla.regoffice.db.managers;
+package eu.senla.regoffice.db.dao;
 
-import eu.senla.regoffice.db.exception.DatabaseException;
 import eu.senla.regoffice.models.Admin;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,12 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AdminManager {
+@RequiredArgsConstructor
+public class AdminDao {
     private final Connection connection;
-
-    public AdminManager(Connection connection) {
-        this.connection = connection;
-    }
 
     public int createAdmin(Admin admin) {
         String sql = """
@@ -32,10 +29,10 @@ public class AdminManager {
             if (rs.next()) {
                 return rs.getInt("staffid");
             } else {
-                throw new DatabaseException("Failed to insert staff (admin)");
+                throw new RuntimeException("Failed to insert staff (admin)");
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -47,7 +44,7 @@ public class AdminManager {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to check admin existence with id=" + staffId, e);
+            throw new RuntimeException("Failed to check admin existence with id=" + staffId, e);
         }
     }
 
@@ -58,10 +55,10 @@ public class AdminManager {
             if (rs.next()) {
                 return rs.getInt("staffid");
             } else {
-                throw new DatabaseException("Admins are empty");
+                throw new RuntimeException("Admins are empty");
             }
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -71,8 +68,21 @@ public class AdminManager {
             stmt.setInt(1, staffId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw new RuntimeException(e);
         }
     }
 
+    public void deleteAdmin(Admin admin) {
+        String sql = "DELETE FROM staff WHERE name = ? and surname = ? and middlename = ? and phonenumber = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, admin.getFirstName());
+            stmt.setString(2, admin.getLastName());
+            stmt.setString(3, admin.getMiddleName());
+            stmt.setString(4, admin.getPhoneNumber());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

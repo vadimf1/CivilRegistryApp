@@ -1,12 +1,15 @@
 package eu.senla.regoffice.api;
 
+import eu.senla.regoffice.constants.ApplicationStatus;
+import eu.senla.regoffice.db.connection.ConnectionHolder;
+import eu.senla.regoffice.db.service.DbService;
+import eu.senla.regoffice.constants.ApplicationType;
+import eu.senla.regoffice.models.GetAllApplicationsResponse;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
 import eu.senla.regoffice.api.client.ApplicationAdministrationApiClient;
 import eu.senla.regoffice.api.client.ApplicationRegistrationApiClient;
-import eu.senla.regoffice.db.managers.AdminManager;
-import eu.senla.regoffice.db.managers.ApplicationManager;
 import eu.senla.regoffice.models.Admin;
 import eu.senla.regoffice.models.ChangeApplicationStatusRequest;
 import eu.senla.regoffice.models.ChangeApplicationStatusResponse;
@@ -17,22 +20,22 @@ import eu.senla.regoffice.factory.UserFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+@Tag("API")
 @Epic("API Администрирование")
 @Feature("Работа с заявками")
 public class ApplicationAdministrationApiTests extends BaseApiTest {
     ApplicationAdministrationApiClient applicationAdministrationApiClient;
     ApplicationRegistrationApiClient applicationRegistrationApiClient;
-    ApplicationManager applicationManager;
-    AdminManager adminManager;
+    DbService dbService;
 
     @BeforeEach
     void setUp() {
         applicationAdministrationApiClient = new ApplicationAdministrationApiClient();
         applicationRegistrationApiClient = new ApplicationRegistrationApiClient();
-        applicationManager = new ApplicationManager(connection);
-        adminManager = new AdminManager(connection);
+        dbService = new DbService(ConnectionHolder.getConnection());
     }
 
     @TmsLink("334")
@@ -41,15 +44,21 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     void registerAdminTest() {
         Admin admin = AdminFactory.createAdmin();
         CreateAdminResponse response = applicationAdministrationApiClient.registerAdmin(admin);
-        Assertions.assertTrue(adminManager.adminExistsById(response.getData().getStaffId()));
-        adminManager.deleteAdminById(response.getData().getStaffId());
+        Assertions.assertTrue(dbService.adminExistsById(response.getData().getStaffId()));
+        dbService.deleteAdminById(response.getData().getStaffId());
     }
 
     @TmsLink("357")
     @Test
     @DisplayName("GET /getApplication - Получение информации о заявках - Валидный запрос")
     void getAllApplicationsTest() {
-        applicationAdministrationApiClient.getAllApplications();
+        GetAllApplicationsResponse response = applicationAdministrationApiClient.getAllApplications();
+        int dbTotalApplications = dbService.getApplicationsCount();
+        System.out.println(response.getData().size());
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(response.getData().size(), Integer.parseInt(response.getTotal())),
+                () -> Assertions.assertEquals(dbTotalApplications, Integer.parseInt(response.getTotal()))
+        );
     }
 
     @TmsLink("336")
@@ -57,23 +66,25 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация рождения) - Валидный запрос")
     void approveBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteBirthApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
+        dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
+        dbService.deleteAdminById(staffId);
     }
 
     @TmsLink("337")
@@ -81,23 +92,23 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация брака) - Валидный запрос")
     void approveMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteMarriageApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication());
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId));
+        dbService.deleteApplicationById(applicationId, ApplicationType.MARRIAGE);
+        dbService.deleteAdminById(staffId);
     }
 
     @TmsLink("338")
@@ -105,23 +116,23 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация смерти) - Валидный запрос")
     void approveDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteDeathApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication());
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId));
+        dbService.deleteApplicationById(applicationId, ApplicationType.DEATH);
+        dbService.deleteAdminById(staffId);
     }
 
     @TmsLink("341")
@@ -129,23 +140,25 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация смерти) - Валидный запрос")
     void rejectDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteDeathApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
+        dbService.deleteApplicationById(applicationId, ApplicationType.DEATH);
+        dbService.deleteAdminById(staffId);
     }
 
     @TmsLink("339")
@@ -153,23 +166,25 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация рождения) - Валидный запрос")
     void rejectBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteBirthApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
+        dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
+        dbService.deleteAdminById(staffId);
     }
 
     @TmsLink("340")
@@ -177,22 +192,24 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация брака) - Валидный запрос")
     void rejectMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        int applicationId = applicationManager.createApplication(user);
+        int applicationId = dbService.createApplication(user);
 
         Admin admin = AdminFactory.createAdmin();
-        int staffId = adminManager.createAdmin(admin);
+        int staffId = dbService.createAdmin(admin);
 
         ChangeApplicationStatusResponse response = applicationAdministrationApiClient.changeApplicationStatus(
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", applicationManager.getApplicationStatusById(applicationId));
-        applicationManager.deleteMarriageApplicationById(applicationId);
-        adminManager.deleteAdminById(staffId);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
+        dbService.deleteApplicationById(applicationId, ApplicationType.MARRIAGE);
+        dbService.deleteAdminById(staffId);
     }
 }

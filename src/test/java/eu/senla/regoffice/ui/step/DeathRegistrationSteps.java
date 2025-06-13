@@ -1,6 +1,8 @@
 package eu.senla.regoffice.ui.step;
 
 import com.codeborne.selenide.Selenide;
+import eu.senla.regoffice.db.service.DbService;
+import eu.senla.regoffice.constants.ApplicationType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
@@ -11,7 +13,6 @@ import eu.senla.regoffice.ui.pages.CitizenDataPage;
 import eu.senla.regoffice.ui.pages.DeathRegistrationDataPage;
 import eu.senla.regoffice.ui.pages.ServiceSelectionPage;
 import eu.senla.regoffice.factory.UserFactory;
-import eu.senla.regoffice.db.managers.ApplicationManager;
 import eu.senla.regoffice.ui.pages.MainPage;
 import eu.senla.regoffice.ui.pages.PageAction;
 
@@ -25,8 +26,7 @@ public class DeathRegistrationSteps {
     private final CitizenDataPage citizenDataPage = new CitizenDataPage();
     private final DeathRegistrationDataPage deathRegistrationDataPage = new DeathRegistrationDataPage();
     private final ApplicationStatusPage applicationStatusPage = new ApplicationStatusPage();
-    private final ApplicationManager applicationManager = new ApplicationManager(ConnectionHolder.getConnection());
-
+    private final DbService dbService = new DbService(ConnectionHolder.getConnection());
     private User user;
 
     @Given("пользователь заходит на главную страницу и авторизуется")
@@ -69,7 +69,7 @@ public class DeathRegistrationSteps {
     @Then("статус заявки должен быть успешно загружен")
     public void checkApplicationStatus() {
         applicationStatusPage.checkIsLoaded();
-        applicationManager.deleteDeathApplicationById(applicationManager.getLastApplicationId());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.DEATH);
     }
 
     @After

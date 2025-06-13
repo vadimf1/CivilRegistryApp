@@ -17,13 +17,41 @@ pipeline {
         string(description: "App password", name: "APP_PASSWORD")
         string(description: "Database login", name: "DB_LOGIN")
         string(description: "Database password", name: "DB_PASSWORD")
+        booleanParam(defaultValue: true, description: "Run all tests", name: "ALL")
+        booleanParam(defaultValue: false, description: "Run ui tests", name: "UI")
+        booleanParam(defaultValue: false, description: "Run api tests", name: "API")
     }
 
     stages {
-        stage('Build') {
+        stage('all') {
             steps {
+                when {
+                    expression { return params.ALL }
+                }
                 script {
                     sh "./gradlew clean test -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
+                }
+            }
+        }
+
+        stage('ui') {
+            steps {
+                when {
+                    expression { return params.UI }
+                }
+                script {
+                    sh "./gradlew clean testUi -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
+                }
+            }
+        }
+
+        stage('api') {
+            steps {
+                when {
+                    expression { return params.API }
+                }
+                script {
+                    sh "./gradlew clean testApi -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
                 }
             }
         }

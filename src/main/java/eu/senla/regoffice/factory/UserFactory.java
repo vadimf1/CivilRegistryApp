@@ -21,7 +21,7 @@ public class UserFactory {
                 .applicantMiddleName(faker.name().firstName() + "овна")
                 .applicantPhoneNumber(faker.number().digits(11))
                 .applicantPassportNumber(faker.number().digits(8))
-                .applicantAddress(faker.address().cityName())
+                .applicantAddress("Город " + faker.address().cityName())
 
                 .citizenLastName(faker.name().lastName())
                 .citizenFirstName(faker.name().firstName())
@@ -29,21 +29,21 @@ public class UserFactory {
                 .citizenBirthDate(dateFormat.format(faker.date().birthday(20, 80)))
                 .citizenPassportNumber(faker.number().digits(8))
                 .citizenGender(gender)
-                .citizenAddress(faker.address().cityName());
+                .citizenAddress("Город " + faker.address().cityName());
     }
 
     public User createUserForDeathRegistration() {
         return createBaseUser()
                 .mode("death")
                 .deathDate(dateFormat.format(new Date()))
-                .deathPlace(faker.address().cityName())
+                .deathPlace("Город " + faker.address().cityName())
                 .build();
     }
 
     public User createUserForBirthRegistration() {
         return createBaseUser()
                 .mode("birth")
-                .birthPlace(faker.address().cityName())
+                .birthPlace("Город " + faker.address().cityName())
                 .motherInfo(faker.name().lastName())
                 .fatherInfo(faker.name().lastName())
                 .grandmotherInfo(faker.name().lastName())
