@@ -71,4 +71,18 @@ public class AdminDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteAdmin(Admin admin) {
+        String sql = "DELETE FROM staff WHERE name = ? and surname = ? and middlename = ? and phonenumber = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, admin.getFirstName());
+            stmt.setString(2, admin.getLastName());
+            stmt.setString(3, admin.getMiddleName());
+            stmt.setString(4, admin.getPhoneNumber());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

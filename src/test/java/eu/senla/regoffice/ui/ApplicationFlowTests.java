@@ -1,7 +1,8 @@
 package eu.senla.regoffice.ui;
 
+import eu.senla.regoffice.constants.ApplicationStatus;
 import eu.senla.regoffice.db.service.DbService;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
 import eu.senla.regoffice.ui.pages.AdminRegistrationDataPage;
 import eu.senla.regoffice.ui.pages.ApplicantDataPage;
 import eu.senla.regoffice.ui.pages.ApplicationAdministrationPage;
@@ -64,8 +65,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -77,9 +78,9 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Одобрена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.DEATH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.APPROVED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.DEATH);
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("368")
@@ -98,8 +99,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -111,9 +112,9 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Отклонена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.DEATH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.REJECTED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.DEATH);
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("361")
@@ -132,8 +133,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -145,9 +146,9 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Одобрена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.BIRTH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.APPROVED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.BIRTH);
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("362")
@@ -166,8 +167,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -179,9 +180,9 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Отклонена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.BIRTH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.REJECTED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.BIRTH);
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("365")
@@ -200,8 +201,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -213,9 +214,9 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Одобрена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.MARRIAGE);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.APPROVED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.MARRIAGE);
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("366")
@@ -234,8 +235,8 @@ public class ApplicationFlowTests extends BaseUiTest {
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        action.clickClose();
         String applicationNumber = applicationStatusPage.getApplicationNumber();
+        action.clickClose();
 
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
@@ -247,8 +248,8 @@ public class ApplicationFlowTests extends BaseUiTest {
 
         mainPage.enterAsUser();
         action.clickRefresh();
-        applicationStatusPage.checkApplicationStatus("Отклонена");
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.MARRIAGE);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        applicationStatusPage.checkApplicationStatus(ApplicationStatus.REJECTED_RUS.getName());
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.MARRIAGE);
+        dbService.deleteAdmin(admin);
     }
 }

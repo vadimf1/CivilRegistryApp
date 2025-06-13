@@ -2,7 +2,7 @@ package eu.senla.regoffice.ui.step;
 
 import com.codeborne.selenide.Selenide;
 import eu.senla.regoffice.db.service.DbService;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
@@ -69,7 +69,7 @@ public class DeathRegistrationSteps {
     @Then("статус заявки должен быть успешно загружен")
     public void checkApplicationStatus() {
         applicationStatusPage.checkIsLoaded();
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.DEATH);
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.DEATH);
     }
 
     @After

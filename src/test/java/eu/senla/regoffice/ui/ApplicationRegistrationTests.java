@@ -1,7 +1,7 @@
 package eu.senla.regoffice.ui;
 
 import eu.senla.regoffice.db.service.DbService;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
 import io.qameta.allure.*;
 import eu.senla.regoffice.models.User;
 import eu.senla.regoffice.ui.pages.ApplicantDataPage;
@@ -52,7 +52,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         deathRegistrationDataPage.fillDeathRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.DEATH);
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.DEATH);
     }
 
     @TmsLink("156")
@@ -71,7 +71,7 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         birthRegistrationDataPage.fillBirthRegistrationDataFrom(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.BIRTH);
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.BIRTH);
     }
 
     @TmsLink("154")
@@ -90,6 +90,6 @@ public class ApplicationRegistrationTests extends BaseUiTest {
         marriageRegistrationDataPage.fillMarriageRegistrationDataForm(user);
         action.clickFinish();
         applicationStatusPage.checkIsLoaded();
-        dbService.deleteApplicationById(dbService.getLastApplicationId(), ApplicationType.MARRIAGE);
+        dbService.deleteApplicationById(dbService.getApplicationIdByCitizen(user), ApplicationType.MARRIAGE);
     }
 }

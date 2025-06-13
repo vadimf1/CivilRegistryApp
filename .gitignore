@@ -46,3 +46,4 @@ bin/
 gradle.properties
 
 *.log
+report

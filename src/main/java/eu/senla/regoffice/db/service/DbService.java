@@ -8,7 +8,8 @@ import eu.senla.regoffice.db.dao.CitizenDao;
 import eu.senla.regoffice.db.dao.DeathCertificateDao;
 import eu.senla.regoffice.db.dao.MarriageCertificateDao;
 import eu.senla.regoffice.models.Admin;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
+import eu.senla.regoffice.models.ApplicationRelatedIds;
 import eu.senla.regoffice.models.User;
 
 import java.sql.Connection;
@@ -42,25 +43,34 @@ public class DbService {
         return applicationDao.getApplicationStatusById(applicationId);
     }
 
+    public int getApplicationIdByCitizen(User user) {
+        int citizenId = citizenDao.getCitizenId(user);
+        return applicationDao.getApplicationIdByCitizenId(citizenId);
+    }
+
+    public int getApplicationsCount() {
+        return applicationDao.getApplicationsCount();
+    }
+
     public boolean applicationExistsById(Integer applicationId) {
         return applicationDao.applicationExistsById(applicationId);
     }
 
-    public int getLastApplicationId() {
-        return applicationDao.getLastApplicationId();
-    }
-
     public void deleteApplicationById(int applicationId, ApplicationType applicationType) {
-        int[] ids = applicationDao.getRelatedIds(applicationId);
-        int citizenId = ids[0];
-        int applicantId = ids[1];
+        ApplicationRelatedIds ids = applicationDao.getRelatedIds(applicationId);
+        int citizenId = ids.getCitizenId();
+        int applicantId = ids.getApplicantId();
 
-        if (applicationType == ApplicationType.BIRTH) {
-            birthCertificateDao.deleteBirthCertificateByCitizenId(citizenId);
-        } else if (applicationType == ApplicationType.MARRIAGE) {
-            marriageCertificateDao.deleteMarriageCertificateByCitizenId(citizenId);
-        } else {
-            deathCertificateDao.deleteDeathCertificateByCitizenId(citizenId);
+        switch (applicationType) {
+            case BIRTH:
+                birthCertificateDao.deleteBirthCertificateByCitizenId(citizenId);
+                break;
+            case MARRIAGE:
+                marriageCertificateDao.deleteMarriageCertificateByCitizenId(citizenId);
+                break;
+            case DEATH:
+                deathCertificateDao.deleteDeathCertificateByCitizenId(citizenId);
+                break;
         }
 
         applicationDao.deleteApplicationById(applicationId);
@@ -76,11 +86,11 @@ public class DbService {
         adminDao.deleteAdminById(staffId);
     }
 
-    public int createAdmin(Admin admin) {
-        return adminDao.createAdmin(admin);
+    public void deleteAdmin(Admin admin) {
+        adminDao.deleteAdmin(admin);
     }
 
-    public int getLastAdminId() {
-        return adminDao.getLastAdminId();
+    public int createAdmin(Admin admin) {
+        return adminDao.createAdmin(admin);
     }
 }

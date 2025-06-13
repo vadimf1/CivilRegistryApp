@@ -3,6 +3,7 @@ package eu.senla.regoffice.ui.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import eu.senla.regoffice.constants.ApplicationStatus;
 import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +42,7 @@ public class ApplicationAdministrationPage {
         checkIsLoaded();
         getRowByApplicationNumber(number)
                 .$x("./td[last()-1]")
-                .shouldHave(Condition.text("Одобрена"), Duration.ofSeconds(10));
+                .shouldHave(Condition.text(ApplicationStatus.APPROVED_RUS.getName()), Duration.ofSeconds(10));
         log.info("Проверка, что заявка с номером {} одобрена", number);
     }
 
@@ -50,7 +51,7 @@ public class ApplicationAdministrationPage {
         checkIsLoaded();
         getRowByApplicationNumber(number)
                 .$x("./td[last()-1]")
-                .shouldHave(Condition.text("Отклонена"), Duration.ofSeconds(10));
+                .shouldHave(Condition.text(ApplicationStatus.REJECTED_RUS.getName()), Duration.ofSeconds(10));
         log.info("Проверка, что заявка с номером {} отклонена", number);
     }
 

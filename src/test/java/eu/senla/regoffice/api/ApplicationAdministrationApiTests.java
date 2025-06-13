@@ -1,8 +1,10 @@
 package eu.senla.regoffice.api;
 
+import eu.senla.regoffice.constants.ApplicationStatus;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
 import eu.senla.regoffice.db.service.DbService;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
+import eu.senla.regoffice.models.GetAllApplicationsResponse;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
@@ -50,7 +52,13 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @Test
     @DisplayName("GET /getApplication - Получение информации о заявках - Валидный запрос")
     void getAllApplicationsTest() {
-        applicationAdministrationApiClient.getAllApplications();
+        GetAllApplicationsResponse response = applicationAdministrationApiClient.getAllApplications();
+        int dbTotalApplications = dbService.getApplicationsCount();
+        System.out.println(response.getData().size());
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(response.getData().size(), Integer.parseInt(response.getTotal())),
+                () -> Assertions.assertEquals(dbTotalApplications, Integer.parseInt(response.getTotal()))
+        );
     }
 
     @TmsLink("336")
@@ -67,12 +75,14 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
         dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
         dbService.deleteAdminById(staffId);
     }
@@ -91,12 +101,12 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication());
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId));
         dbService.deleteApplicationById(applicationId, ApplicationType.MARRIAGE);
         dbService.deleteAdminById(staffId);
     }
@@ -115,12 +125,12 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("approved")
+                        .action(ApplicationStatus.APPROVED.getName())
                         .build()
         );
         Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("approved", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("approved", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), response.getData().getStatusOfApplication());
+        Assertions.assertEquals(ApplicationStatus.APPROVED.getName(), dbService.getApplicationStatusById(applicationId));
         dbService.deleteApplicationById(applicationId, ApplicationType.DEATH);
         dbService.deleteAdminById(staffId);
     }
@@ -139,12 +149,14 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
         dbService.deleteApplicationById(applicationId, ApplicationType.DEATH);
         dbService.deleteAdminById(staffId);
     }
@@ -163,12 +175,14 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
         dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
         dbService.deleteAdminById(staffId);
     }
@@ -187,12 +201,14 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
                 ChangeApplicationStatusRequest.builder()
                         .appId(applicationId)
                         .staffId(staffId)
-                        .action("rejected")
+                        .action(ApplicationStatus.REJECTED.getName())
                         .build()
         );
-        Assertions.assertEquals(applicationId, response.getData().getApplicationId());
-        Assertions.assertEquals("rejected", response.getData().getStatusOfApplication());
-        Assertions.assertEquals("rejected", dbService.getApplicationStatusById(applicationId));
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(applicationId, response.getData().getApplicationId()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), response.getData().getStatusOfApplication()),
+                () -> Assertions.assertEquals(ApplicationStatus.REJECTED.getName(), dbService.getApplicationStatusById(applicationId))
+        );
         dbService.deleteApplicationById(applicationId, ApplicationType.MARRIAGE);
         dbService.deleteAdminById(staffId);
     }

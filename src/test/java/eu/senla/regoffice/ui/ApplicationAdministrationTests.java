@@ -2,7 +2,7 @@ package eu.senla.regoffice.ui;
 
 import eu.senla.regoffice.db.service.DbService;
 import eu.senla.regoffice.models.Admin;
-import eu.senla.regoffice.models.ApplicationType;
+import eu.senla.regoffice.constants.ApplicationType;
 import eu.senla.regoffice.ui.pages.AdminRegistrationDataPage;
 import eu.senla.regoffice.ui.pages.ApplicationAdministrationPage;
 import eu.senla.regoffice.factory.AdminFactory;
@@ -46,7 +46,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
         applicationAdministrationPage.approveApplicationByNumber(String.valueOf(applicationId));
         applicationAdministrationPage.checkApplicationIsApproved(String.valueOf(applicationId));
         dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        dbService.deleteAdmin(admin);
     }
 
     @TmsLink("157")
@@ -61,6 +61,6 @@ public class ApplicationAdministrationTests extends BaseUiTest {
         applicationAdministrationPage.rejectApplicationByNumber(String.valueOf(applicationId));
         applicationAdministrationPage.checkApplicationIsRejected(String.valueOf(applicationId));
         dbService.deleteApplicationById(applicationId, ApplicationType.BIRTH);
-        dbService.deleteAdminById(dbService.getLastAdminId());
+        dbService.deleteAdmin(admin);
     }
 }

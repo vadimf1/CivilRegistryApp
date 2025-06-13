@@ -1,5 +1,6 @@
 package eu.senla.regoffice.db.dao;
 
+import eu.senla.regoffice.models.ApplicationRelatedIds;
 import eu.senla.regoffice.models.User;
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +34,7 @@ public class ApplicationDao {
         }
     }
 
-    public int[] getRelatedIds(int applicationId) {
+    public ApplicationRelatedIds getRelatedIds(int applicationId) {
         String sql = "SELECT citizenid, applicantid FROM applications WHERE applicationid = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, applicationId);
@@ -41,26 +42,15 @@ public class ApplicationDao {
             if (rs.next()) {
                 int citizenId = rs.getInt("citizenid");
                 int applicantId = rs.getInt("applicantid");
-                return new int[] { citizenId, applicantId };
+                return ApplicationRelatedIds.builder()
+                        .applicantId(applicantId)
+                        .citizenId(citizenId)
+                        .build();
             } else {
                 throw new RuntimeException("No application found with id = " + applicationId);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Failed to fetch related IDs for application " + applicationId, e);
-        }
-    }
-
-    public int getLastApplicationId() {
-        String sql = "SELECT applicationid FROM applications ORDER BY applicationid DESC LIMIT 1";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("applicationid");
-            } else {
-                throw new RuntimeException("Applications are empty");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -73,6 +63,35 @@ public class ApplicationDao {
                 return rs.getString("statusofapplication");
             } else {
                 throw new RuntimeException("No application found with id = " + applicationId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getApplicationIdByCitizenId(int citizenId) {
+        String sql = "SELECT applicationid FROM applications WHERE citizenid = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, citizenId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("applicationid");
+            } else {
+                throw new RuntimeException("No application found with citizen id = " + citizenId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getApplicationsCount() {
+        String sql = "SELECT COUNT(*) FROM applications";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new IllegalStateException("COUNT(*) query returned no result");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
