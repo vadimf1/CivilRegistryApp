@@ -64,8 +64,8 @@ pipeline {
                 results: [[path: "build/allure-results"]]
             ])
             emailext(
-                subject: 'SENLA-REGOFFICE: Allure Report for Build #${BUILD_NUMBER}',
-                body: 'Link to the Allure Report for Build #${BUILD_NUMBER}: ${env.BUILD_URL}allure/',
+                subject: 'SENLA-REGOFFICE: Allure Report for Build ',
+                body: 'Link to the Allure Report for Build',
                 to: 'vadimfth@gmail.com'
             )
         }
