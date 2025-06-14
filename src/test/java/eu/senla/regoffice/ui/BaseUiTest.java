@@ -1,7 +1,7 @@
 package eu.senla.regoffice.ui;
 
 import com.codeborne.selenide.Selenide;
-import eu.senla.regoffice.config.DriverSettings;
+import eu.senla.regoffice.ui.config.DriverSettings;
 import io.qameta.allure.Step;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
 import eu.senla.regoffice.ui.pages.MainPage;

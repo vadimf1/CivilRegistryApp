@@ -1,4 +1,4 @@
-package eu.senla.regoffice.config;
+package eu.senla.regoffice.ui.config;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -11,18 +11,16 @@ import java.util.Map;
 
 public class DriverSettings {
     public static void setUp() {
-        Configuration.remote = "http://host.docker.internal:4444/wd/hub";
-        Configuration.browser = System.getProperty("browser.type");
+        Configuration.remote = PropertyUtil.getProperty("selenide.remote");
         Configuration.browserSize = System.getProperty("browser.size");
         Configuration.baseUrl = PropertyUtil.getProperty("baseUri");
 
         Map<String, Object> selenoidOptions = new HashMap<>();
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableVideo", true);
-        selenoidOptions.put("screenResolution", "1920x1080x24");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", Configuration.browser);
+        capabilities.setCapability("browserName", System.getProperty("browser.name"));
         capabilities.setCapability("selenoid:options", selenoidOptions);
 
         Configuration.browserCapabilities = capabilities;

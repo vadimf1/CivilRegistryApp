@@ -1,7 +1,7 @@
 FROM gradle:8.3.0-jdk17
 WORKDIR /app
 COPY . .
-CMD ./gradlew test --tests "eu.senla.regoffice.ui.ApplicationRegistrationTests" \
+CMD ./gradlew $GRADLE_TASK \
     -Ddb.login=$DB_LOGIN \
     -Ddb.password=$DB_PASSWORD \
     -Dapp.login=$APP_LOGIN \

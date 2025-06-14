@@ -24,10 +24,10 @@ pipeline {
 
     stages {
         stage('all') {
+            when {
+                expression { return params.ALL }
+            }
             steps {
-                when {
-                    expression { return params.ALL }
-                }
                 script {
                     sh "./gradlew clean test -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
                 }
@@ -35,10 +35,10 @@ pipeline {
         }
 
         stage('ui') {
+            when {
+                expression { return params.UI }
+            }
             steps {
-                when {
-                    expression { return params.UI }
-                }
                 script {
                     sh "./gradlew clean testUi -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
                 }
@@ -46,10 +46,10 @@ pipeline {
         }
 
         stage('api') {
+            when {
+                expression { return params.API }
+            }
             steps {
-                when {
-                    expression { return params.API }
-                }
                 script {
                     sh "./gradlew clean testApi -Ddb.login=${params.DB_LOGIN} -Ddb.password=${params.DB_PASSWORD} -Dapp.login=${params.APP_LOGIN} -Dapp.password=${params.APP_PASSWORD} -Dbrowser.type=${params.BROWSER_TYPE} -Dbrowser.size=${params.BROWSER_SIZE}"
                 }
@@ -64,9 +64,9 @@ pipeline {
                 results: [[path: "build/allure-results"]]
             ])
             emailext(
-                subject: "SENLA-REGOFFICE: Allure Report for Build #${BUILD_NUMBER}",
-                body: "Link to the Allure Report for Build #${BUILD_NUMBER}: ${env.BUILD_URL}allure/",
-                to: "vadimfth@gmail.com"
+                subject: "SENLA-REGOFFICE: Allure Report for Build #${env.BUILD_NUMBER}",
+                body: "Link to the Allure Report for Build #${env.BUILD_NUMBER}: ${env.BUILD_URL}allure/",
+                to: 'vadimfunt1@gmail.com'
             )
         }
     }

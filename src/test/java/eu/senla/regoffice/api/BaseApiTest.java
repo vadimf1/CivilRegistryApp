@@ -1,6 +1,5 @@
 package eu.senla.regoffice.api;
 
-import eu.senla.regoffice.config.DriverSettings;
 import eu.senla.regoffice.db.connection.ConnectionHolder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

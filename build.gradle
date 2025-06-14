@@ -38,6 +38,10 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(Test) {
+    maxParallelForks = 1
+}
+
 tasks.register('testApi', Test) {
     useJUnitPlatform {
         includeTags 'API'
@@ -53,7 +57,6 @@ tasks.register('testUi', Test) {
 }
 
 test {
-    maxParallelForks = 3
     systemProperties(System.getProperties())
     useJUnitPlatform()
 }

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 docker run --rm \
+  -e GRADLE_TASK="$GRADLE_TASK" \
   -e DB_LOGIN="$DB_LOGIN" \
   -e DB_PASSWORD="$DB_PASSWORD" \
   -e APP_LOGIN="$APP_LOGIN" \
