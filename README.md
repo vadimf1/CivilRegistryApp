@@ -23,59 +23,94 @@
 src/
 ├── main/
 │   ├── java/
-│   │   └── org/example/
-│   │       ├── api/
-│   │       ├── db/
-│   │       ├── models/
-│   │       ├── ui/
-│   │       │   └── pages/
-│   │       └── utils/
+│   │   └── eu/senla/regoffice/
+│   │       ├── api/           # API клиенты и спецификации
+│   │       ├── constants/     # Константы проекта
+│   │       ├── db/           # Работа с базой данных
+│   │       ├── factory/      # Фабрики для создания объектов
+│   │       ├── models/       # Модели данных
+│   │       ├── ui/           # UI компоненты
+│   │       │   ├── config/   # Конфигурация UI тестов
+│   │       │   └── pages/    # Page Objects
+│   │       └── utils/        # Утилитные классы
 │   └── resources/
 └── test/
     ├── java/
     │   └── eu/senla/regoffice/
-    │       ├── api/
-    │       └── ui/
+    │       ├── api/         # API тесты
+    │       └── ui/          # UI тесты
     └── resources/
+        ├── features/        # Cucumber feature файлы
 ```
 
 ## Требования для запуска
 - JDK 17 или выше
 - Gradle 8.5 или выше
-- Chrome браузер (по умолчанию)
+- Браузер (Chrome, Firefox или другой)
 - PostgreSQL
 
 ## Параметры запуска
 Проект поддерживает следующие параметры запуска, которые можно передать через командную строку:
 
-```bash
-# Параметры авторизации в приложении (обязательные параметры)
--Dapp.login
--Dapp.password
+```
+# Параметры авторизации в приложении (обязательные)
+-Dapp.login=app_login
+-Dapp.password=app_password
 
-# Параметры подключения к базе данных (обязательные параметры)
--Ddb.login
--Ddb.password
+# Параметры подключения к базе данных (обязательные)
+-Ddb.login=db_login
+-Ddb.password=db_password
 
-# Параметры браузера (по умолчанию)
+# Параметры браузера (обязательные)
 -Dbrowser.size=1920x1080
 -Dbrowser.type=chrome
+```
+
+## Альтернативный способ передачи параметров
+Параметры можно также задать в файле gradle.properties, который должен находиться в корне проекта
+Пример содержимого файла:
+
+```
+systemProp.app.login=app_login
+systemProp.app.password=app_password
+systemProp.db.login=db_login
+systemProp.db.password=db_password
+systemProp.browser.size=1920x1080
+systemProp.browser.type=chrome
 ```
 
 ## Запуск тестов
 Для запуска всех тестов:
 ```bash
-./gradlew test параметры
+./gradlew test \
+  -Dapp.login=app_login \
+  -Dapp.password=app_password \
+  -Ddb.login=db_login \
+  -Ddb.password=db_password \
+  -Dbrowser.size=1920x1080 \
+  -Dbrowser.type=chrome
 ```
 
 Для запуска UI тестов:
 ```bash
-./gradlew test --tests "eu.senla.regoffice.ui.*" параметры
+./gradlew testUi \
+  -Dapp.login=app_login \
+  -Dapp.password=app_password \
+  -Ddb.login=db_login \
+  -Ddb.password=db_password \
+  -Dbrowser.size=1920x1080 \
+  -Dbrowser.type=chrome
 ```
 
 Для запуска API тестов:
 ```bash
-./gradlew test --tests "eu.senla.regoffice.api.*" параметры
+./gradlew testApi \
+  -Dapp.login=app_login \
+  -Dapp.password=app_password \
+  -Ddb.login=db_login \
+  -Ddb.password=db_password \
+  -Dbrowser.size=1920x1080 \
+  -Dbrowser.type=chrome
 ```
 
 ## Генерация отчета Allure
