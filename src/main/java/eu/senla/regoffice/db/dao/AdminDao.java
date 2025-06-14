@@ -48,20 +48,6 @@ public class AdminDao {
         }
     }
 
-    public int getLastAdminId() {
-        String sql = "SELECT staffid FROM staff ORDER BY staffid DESC LIMIT 1";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("staffid");
-            } else {
-                throw new RuntimeException("Admins are empty");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void deleteAdminById(int staffId) {
         String sql = "DELETE FROM staff WHERE staffid = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

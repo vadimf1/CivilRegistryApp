@@ -1,4 +1,4 @@
-package eu.senla.regoffice.config;
+package eu.senla.regoffice.ui.config;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;

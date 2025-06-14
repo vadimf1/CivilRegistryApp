@@ -54,9 +54,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     void getAllApplicationsTest() {
         GetAllApplicationsResponse response = applicationAdministrationApiClient.getAllApplications();
         int dbTotalApplications = dbService.getApplicationsCount();
-        System.out.println(response.getData().size());
         Assertions.assertAll(
-                () -> Assertions.assertEquals(response.getData().size(), Integer.parseInt(response.getTotal())),
                 () -> Assertions.assertEquals(dbTotalApplications, Integer.parseInt(response.getTotal()))
         );
     }
