@@ -1,5 +1,12 @@
 #!/bin/bash
 
+CONTAINER_NAME=selenoid
+VIDEO_FOLDER=./report/video
+REPORT_FOLDER=./report
+
+rm -rf "$REPORT_FOLDER"
+mkdir -p "$VIDEO_FOLDER"
+
 docker run --rm \
   -e GRADLE_TASK="$GRADLE_TASK" \
   -e DB_LOGIN="$DB_LOGIN" \
@@ -13,9 +20,5 @@ docker run --rm \
   --add-host=host.docker.internal:host-gateway \
   civil-registry-app
 
-CONTAINER_NAME=selenoid
-DEST_FOLDER=./report/video
-
-rm -rf "$DEST_FOLDER" && mkdir -p "$DEST_FOLDER"
-docker cp "$CONTAINER_NAME:/opt/selenoid/video/." "$DEST_FOLDER"
+docker cp "$CONTAINER_NAME:/opt/selenoid/video/." "$VIDEO_FOLDER"
 docker exec $CONTAINER_NAME sh -c 'rm -f /opt/selenoid/video/*.mp4'
