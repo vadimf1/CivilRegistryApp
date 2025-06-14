@@ -17,6 +17,7 @@
 - Logback 1.5.16
 - Jackson 2.19.0
 - JavaFaker 1.0.2
+- Docker
 
 ## Структура проекта
 ```
@@ -24,65 +25,82 @@ src/
 ├── main/
 │   ├── java/
 │   │   └── org/example/
-│   │       ├── api/
-│   │       ├── db/
-│   │       ├── models/
-│   │       ├── ui/
-│   │       │   └── pages/
-│   │       └── utils/
+│   │       ├── api/          # API клиенты и спецификации
+│   │       ├── db/           # Работа с базой данных
+│   │       ├── models/       # Модели данных
+│   │       ├── ui/           # UI компоненты
+│   │       │   └── config/   # Конфигурация UI тестов
+│   │       │   └── pages/    # Page Objects
+│   │       │            
+│   │       └── utils/        # Утилитные классы
 │   └── resources/
 └── test/
     ├── java/
-    │   └── eu/senla/regoffice/
-    │       ├── api/
-    │       └── ui/
+    │   └── org/example/
+    │       ├── api/         # API тесты
+    │       └── ui/          # UI тесты
     └── resources/
 ```
 
 ## Требования для запуска
-- JDK 17 или выше
-- Gradle 8.5 или выше
-- Chrome браузер (по умолчанию)
-- PostgreSQL
+- Docker
+- Bash shell
 
-## Параметры запуска
-Проект поддерживает следующие параметры запуска, которые можно передать через командную строку:
+## Параметры окружения Docker
 
-```bash
-# Параметры авторизации в приложении (обязательные параметры)
--Dapp.login
--Dapp.password
+Проект требует следующие переменные окружения, которые необходимо передать в контейнер при запуске:
 
-# Параметры подключения к базе данных (обязательные параметры)
--Ddb.login
--Ddb.password
+```
+# Название задачи Gradle
+# GRADLE_TASK может принимать значения:
+# test – для запуска всех типов тестов
+# testUi – для запуска UI тестов
+# testApi – для запуска API тестов
+GRADLE_TASK=testUi
 
-# Параметры браузера (по умолчанию)
--Dbrowser.size=1920x1080
--Dbrowser.type=chrome
+# Параметры подключения к базе данных
+DB_LOGIN=db_login
+DB_PASSWORD=db_password
+
+# Параметры авторизации в приложении
+APP_LOGIN=app_login
+APP_PASSWORD=app_password
+
+# Параметры браузера
+# BROWSER_TYPE может принимать значения:
+# chrome, firefox, opera
+BROWSER_TYPE=chrome
+BROWSER_SIZE=1920x1080
 ```
 
 ## Запуск тестов
-Для запуска всех тестов:
+1. Сборка Docker образа:
 ```bash
-./gradlew test параметры
+docker build -t civil-registry-app .
 ```
 
-Для запуска UI тестов:
+2. Запуск тестов через скрипт run-tests.sh:
 ```bash
-./gradlew test --tests "eu.senla.regoffice.ui.*" параметры
+GRADLE_TASK=testUi \
+DB_LOGIN=db_login \
+DB_PASSWORD=db_password \
+APP_LOGIN=app_login \
+APP_PASSWORD=app_password \
+BROWSER_TYPE=chrome \
+BROWSER_SIZE=1920x1080 \
+/bin/bash run-tests.sh
 ```
 
-Для запуска API тестов:
-```bash
-./gradlew test --tests "eu.senla.regoffice.api.*" параметры
-```
+## Результаты выполнения тестов
+1. Видео-записи тестов сохраняются в директории
+`report/video`, расположенной в корне проекта.
+2. Результаты Allure-тестов сохраняются в
+`report/allure-results`, также в корне проекта.
 
 ## Генерация отчета Allure
 После выполнения тестов для генерации отчета выполните:
 ```bash
-./gradlew allureReport
-./gradlew allureServe
+allure serve ./report/allure-results
 ```
 
 ## Основной функционал
@@ -109,3 +127,4 @@ src/
 - Логирование с использованием SLF4J и Logback
 - Генерация тестовых данных с помощью JavaFaker
 - Работа с базой данных PostgreSQL
+- Запуск тестов в Docker контейнере
