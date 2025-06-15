@@ -2,6 +2,7 @@ package eu.senla.regoffice.api;
 
 import eu.senla.regoffice.db.service.DbService;
 import eu.senla.regoffice.constants.ApplicationType;
+import eu.senla.regoffice.models.GetApplStatusResponse;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.TmsLink;
@@ -65,7 +66,8 @@ public class ApplicationRegistrationApiTests extends BaseApiTest {
         User user = UserFactory.createUserForDeathRegistration();
         CreateApplicationResponse createApplicationResponse = applicationRegistrationApiClient.createApplication(user);
         Integer applicationId = createApplicationResponse.getData().getApplicationId();
-        applicationRegistrationApiClient.getApplStatus(applicationId);
+        GetApplStatusResponse getApplStatusResponse = applicationRegistrationApiClient.getApplStatus(applicationId);
+        Assertions.assertEquals(dbService.getApplicationStatusById(applicationId), getApplStatusResponse.getData().getStatusOfApplication());
         dbService.deleteApplicationById(createApplicationResponse.getData().getApplicationId(), ApplicationType.DEATH);
     }
 }

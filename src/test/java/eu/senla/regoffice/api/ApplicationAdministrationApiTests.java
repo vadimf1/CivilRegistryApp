@@ -64,7 +64,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация рождения) - Валидный запрос")
     void approveBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.BIRTH);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);
@@ -90,7 +90,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация брака) - Валидный запрос")
     void approveMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.MARRIAGE);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);
@@ -114,7 +114,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Одобрение заявки (Регистрация смерти) - Валидный запрос")
     void approveDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.DEATH);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);
@@ -138,7 +138,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация смерти) - Валидный запрос")
     void rejectDeathApplicationTest() {
         User user = UserFactory.createUserForDeathRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.DEATH);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);
@@ -164,7 +164,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация рождения) - Валидный запрос")
     void rejectBirthApplicationTest() {
         User user = UserFactory.createUserForBirthRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.BIRTH);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);
@@ -190,7 +190,7 @@ public class ApplicationAdministrationApiTests extends BaseApiTest {
     @DisplayName("POST /processRequest - Отклонение заявки (Регистрация брака) - Валидный запрос")
     void rejectMarriageApplicationTest() {
         User user = UserFactory.createUserForMarriageRegistration();
-        int applicationId = dbService.createApplication(user);
+        int applicationId = dbService.createApplication(user, ApplicationType.MARRIAGE);
 
         Admin admin = AdminFactory.createAdmin();
         int staffId = dbService.createAdmin(admin);

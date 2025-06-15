@@ -38,7 +38,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     @Test
     @DisplayName("Администрирование заявок: статус 'Одобрена' - E2E")
     void approveApplicationTest() {
-        int applicationId = dbService.createApplication(UserFactory.createUserForBirthRegistration());
+        int applicationId = dbService.createApplication(UserFactory.createUserForBirthRegistration(), ApplicationType.BIRTH);
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);
@@ -53,7 +53,7 @@ public class ApplicationAdministrationTests extends BaseUiTest {
     @Test
     @DisplayName("Администрирование заявок: статус 'Отклонена' - E2E")
     void rejectApplicationTest() {
-        int applicationId = dbService.createApplication(UserFactory.createUserForBirthRegistration());
+        int applicationId = dbService.createApplication(UserFactory.createUserForBirthRegistration(), ApplicationType.BIRTH);
         Admin admin = AdminFactory.createAdmin();
         mainPage.enterAsAdmin();
         adminRegistrationDataPage.fillAdminRegistrationDataForm(admin);

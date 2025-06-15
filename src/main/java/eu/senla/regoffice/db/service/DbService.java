@@ -33,9 +33,22 @@ public class DbService {
         adminDao = new AdminDao(connection);
     }
 
-    public int createApplication(User user) {
+    public int createApplication(User user, ApplicationType applicationType) {
         int applicantId = applicantDao.createApplicant(user);
         int citizenId = citizenDao.createCitizen(user);
+
+        switch (applicationType) {
+            case BIRTH:
+                birthCertificateDao.createBirthCertificate(user, citizenId);
+                break;
+            case MARRIAGE:
+                marriageCertificateDao.createMarriageCertificate(user, citizenId);
+                break;
+            case DEATH:
+                deathCertificateDao.createDeathCertificate(user, citizenId);
+                break;
+        }
+
         return applicationDao.createApplication(user, applicantId, citizenId);
     }
 
